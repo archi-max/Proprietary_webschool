@@ -3,17 +3,9 @@ import uuid
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.contrib.auth.models import Group
+from utils.files import filename_generator, document_fileextension_validator
 
-# Create your models here.
-def filename_generator(instance, filename):
-    return  uuid.uuid4().hex + filename
-
-def document_fileextension_validator(value):
-    import os
-    ext = os.path.splitext(value.name)[1]
-    valid_extensions = ['.pdf', '.doc', '.docx']
-    if not ext.lower() in valid_extensions:
-        raise ValidationError(u'Unsupported file extension.')
+filename_generator = lambda inst, fn: filename_generator(inst, fn, 'posts')
 
 class Post(models.Model):
 
@@ -23,7 +15,10 @@ class Post(models.Model):
     NOTES = 'NT'
 
     TYPE_CHOICES = (
-
+        (ANNOUNCEMENT, 'Announcement'),
+        (RESULT, 'Result'),
+        (QUESTION_BANK, 'Question Bank'),
+        (NOTES, 'Notes'),
     )
 
     title = models.CharField(max_length=100)
@@ -32,9 +27,9 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
     file = models.FileField(upload_to=filename_generator, validators=[document_fileextension_validator], blank=True, null=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
-    tags = models.CharField(max_length=2, choices=TYPE_CHOICES, blank=True, null=True)
-    groups = models.ManyToManyField(Group, on_delete=models.CASCADE, blank=True, null=True) # groups that can see this announcement
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True, related_name='posts')
+    tags = models.CharField(max_length=2, choices=TYPE_CHOICES, blank=True, default=ANNOUNCEMENT)
+    groups = models.ManyToManyField(Group, blank=True, related_name='posts') # groups that can see this announcement
 
     def __str__(self):
         return self.title

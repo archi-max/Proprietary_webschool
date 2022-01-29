@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'notes.apps.NotesConfig',
+    'forms.apps.FormsConfig',
+    'posts.apps.PostsConfig',
     'user.apps.UserConfig',
     'django.contrib.admin',
     'django.contrib.auth',
