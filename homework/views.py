@@ -36,7 +36,7 @@ class WorkCreateView(CreateView):
 
 class WorkListView(ListView):
     model = Work
-    template_name = 'homework/list.html'
+    template_name = 'homework/homework.html'
     success_url = '/homework/'
 
     def get_queryset(self):
@@ -47,7 +47,7 @@ class WorkListView(ListView):
 
 class SubmissionListView(ListView):
     model = Submission
-    template_name = 'homework/list.html'
+    template_name = 'homework/documents.html'
     success_url = '/homework/'
 
     def get_queryset(self):

@@ -1,22 +1,12 @@
-<!DOCTYPE html>
-{% extends "base.html" %}
 {% load static %}
+<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!-- <meta http-equiv="refresh" content="0.1"> -->
-    <title>Announcements</title>
-    <link rel="stylesheet" href="{% static 'posts/styles.css' %}">
-    <!--<link href="../../../templates/style.css" rel="stylesheet" type="text/css" />-->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
-    />
-  </head>
+  {% include "head.html" %}
+  
   <body>
     <!--<script src="script.js"></script>-->
-    <main>      
+    <main>
+      {% include "navbar.html" %}      
       <section id="right-section">
         <h1 class="section-heading">Announcements</h1>
         <div class="announcements">
@@ -27,6 +17,12 @@
               {{announcement.description}}
             </p>
             <span class="announcement-date">{{announcement.date}}</span>
+          </div>
+          {% empty %}
+          <div class="">
+            <p class="announcement-description">
+              No announcements found :(
+            </p>
           </div>
           {% endfor %}
         </div>
