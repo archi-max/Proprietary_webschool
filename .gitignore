@@ -1,3 +1,8 @@
+/.idea/
+/venv/
+/db.sqlite3
+/notebook.html
+
 __pycache__/
 *.py[cod]
 

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin
 )
-
+import datetime
 
 # Create your models here.
 class UserManager(BaseUserManager):
@@ -53,6 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         unique=True,
     )
     id = models.AutoField(primary_key=True)
+    user_id = models.CharField(max_length=10, unique=True, null=False, blank=False)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     user_type = models.CharField(max_length=2, choices=USER_TYPE_CHOICES, default=STUDENT, blank=True)
@@ -60,7 +61,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_admin = models.BooleanField(default=False, blank=True)
     objects = UserManager()
 
-    USERNAME_FIELD = 'id'
+    USERNAME_FIELD = 'user_id'
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
 
@@ -78,3 +79,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+    def save(self, *args, **kwargs):
+        """Saves the user"""
+
+        self.user_id = 'BE/' + str(  datetime.datetime.now().year )[-2:]  + str( self.id ).zfill(5)
+        super().save(*args, **kwargs)
