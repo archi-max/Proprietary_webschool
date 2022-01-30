@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  {% include "head.html" %}
+  
+  <body>
+    <!--<script src="script.js"></script>-->
+    <main>
+      {% include "navbar.html" %}
+      <section id="right-section">
+        <h1 class="section-heading">Submissions</h1>    
+        {% for sub in object_list %}      
+        <div class="hl"></div>
+        <div class="documents">
+          <div class="document">
+            <div>Text</div>
+            <a class="bi bi-download" download></a>
+          </div>
+        </div>
+        {% empty %}
+        <div class="documents">
+          <div class="document">
+            <div>No Submissions yet</div>
+          </div>
+        </div>
+        {% endfor %}
+      </section>
+    </main>
+  </body>
+</html>

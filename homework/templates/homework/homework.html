@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  {% include "head.html" %}  
+  <body>
+    <!--<script src="script.js"></script>-->
+    <main>
+      {% include "navbar.html" %} 
+      <section id="right-section">
+        <h1 class="section-heading">Homework</h1>
+        <div class="homeworks">
+          {% for post in object_list %}
+          <div class="homework">
+            <h2 class="homework-title">{{ post.title }}</h2>
+            <p class="homework-description">
+              {{ post.description }}
+            </p>
+            <span class="homework-start">Updated at {{ post.updated_at|date:"nS F o" }}</span>
+            <span class="homework-due">Endline {{ post.upload_by|date:"nS F o" }}</span>
+            <form class="homework-form">
+              <input type="file" id="file" />
+              <button>
+                <i class="bi bi-upload"></i>
+                <span>Upload</span>
+              </button>
+            </form>
+          </div>
+          {% empty %}
+          <p class="homework-description">
+            No work now YeY
+          </p>
+          {% endfor %}       
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
