@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('notes/', include('notes.urls')),
     path('posts/',include('posts.urls')),
-    path('homework/',include('homework.urls'))
+    path('homework/',include('homework.urls')),
+    path('notes/',include('notes.urls')),
 ]

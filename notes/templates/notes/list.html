@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Posts</title>
+</head>
+<body>
+<ul>
+{% for nb in object_list %}
+    <a href="http://localhost:3000/p/{{ nb.notebook_id }}" target="_blank">
+        <li>{{ nb }}</li>
+    </a>
+{% empty %}
+    <li>No notebook yet.</li>
+{% endfor %}
+</ul>
+</body>
+</html>
