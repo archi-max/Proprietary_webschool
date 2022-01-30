@@ -9,7 +9,7 @@ from .forms import PostForm
 
 class PostListView(ListView):
     model = Post
-    template_name = 'posts/post_list.html'
+    template_name = 'posts/announcements.html'
 
     def get_queryset(self):
         return Post.objects.filter(groups__in=self.request.user.groups.all()).order_by('-updated_at').distinct()
