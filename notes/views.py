@@ -36,14 +36,14 @@ from .forms import NotebookForm
 #     r.headers['Access-Control-Allow-Origin'] = '*'
 #     return r
 
-class NotebookDetailView(DetailView):
-    model = Notebook
-    template_name = 'notes/notebook_detail.html'
-
-    def dispatch(self, *args, **kwargs):
-        response = super(NotebookDetailView, self).dispatch(*args, **kwargs)
-        response["Access-Control-Allow-Origin"] = "*"
-        return response
+# class NotebookDetailView(DetailView):
+#     model = Notebook
+#     template_name = 'notes/documents.html'
+    
+#     def dispatch(self, *args, **kwargs):
+#         response = super(NotebookDetailView, self).dispatch(*args, **kwargs)
+#         response["Access-Control-Allow-Origin"] = "*"
+#         return response
 
 
 class NotebookFormView(FormView):
@@ -59,7 +59,7 @@ class NotebookFormView(FormView):
 
 class NotebookListView(ListView):
     model = Notebook
-    template_name = 'notes/list.html'
+    template_name = 'notes/documents.html'
 
     def get_queryset(self):
         return Notebook.objects.filter(created_by=self.request.user).order_by('-created_at')
