@@ -3,6 +3,7 @@ from .models import Notebook
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.views.generic.detail import DetailView
 import requests as r
 from django.views.generic.edit import FormView
 from .forms import NotebookForm
@@ -34,14 +35,14 @@ def notebook_save_view(request, pk):
     r.headers['Access-Control-Allow-Origin'] = '*'
     return r
 
-# class NotebookDetailView(DetailView):
-#     model = Notebook
-#     template_name = 'notes/notebook_detail.html'
-#
-#     def dispatch(self, *args, **kwargs):
-#         response = super(NotebookDetailView, self).dispatch(*args, **kwargs)
-#         response["Access-Control-Allow-Origin"] = "*"
-#         return response
+class NotebookDetailView(DetailView):
+    model = Notebook
+    template_name = 'notes/notebook_detail.html'
+
+    def dispatch(self, *args, **kwargs):
+        response = super(NotebookDetailView, self).dispatch(*args, **kwargs)
+        response["Access-Control-Allow-Origin"] = "*"
+        return response
 
 
 class NotebookFormView(FormView):

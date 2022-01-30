@@ -16,7 +16,7 @@ def create_notion_page():
 class NotebookForm(forms.ModelForm):
     class Meta:
         model = Notebook
-        fields = ['title', 'content']
+        fields = ['title']
 
     def save(self, commit=True):
         notebook = super(NotebookForm, self).save(commit=False)
