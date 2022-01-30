@@ -20,6 +20,7 @@ class Notebook(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-
+    def __str__(self):
+        return self.title
 
 
