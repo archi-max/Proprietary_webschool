@@ -3,9 +3,10 @@ import uuid
 from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.contrib.auth.models import Group
-from utils.files import filename_generator, document_fileextension_validator
+from utils.files import filename_generator as fg, document_fileextension_validator
 
-filename_generator = lambda inst, fn: filename_generator(inst, fn, 'posts')
+def filename_generator(inst, fn):
+    return fg(inst, fn, 'posts')
 
 class Post(models.Model):
 
@@ -27,7 +28,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
     file = models.FileField(upload_to=filename_generator, validators=[document_fileextension_validator], blank=True, null=True)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True, related_name='posts')
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,  related_name='posts')
     tags = models.CharField(max_length=2, choices=TYPE_CHOICES, blank=True, default=ANNOUNCEMENT)
     groups = models.ManyToManyField(Group, blank=True, related_name='posts') # groups that can see this announcement
 

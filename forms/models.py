@@ -4,8 +4,11 @@ from django.contrib.auth.models import Group
 from utils.files import filename_generator, document_fileextension_validator as extension_validator
 # Create your models here.
 
-answer_filename_generator = lambda instance, filename: filename_generator(instance, filename, 'forms\\answers')
-question_filename_generator = lambda instance, filename: filename_generator(instance, filename, 'forms\\questions')
+# answer_filename_generator = lambda instance, filename: filename_generator(instance, filename, 'forms\\answers')
+# question_filename_generator = lambda instance, filename: filename_generator(instance, filename, 'forms\\questions')
+
+def class_filename_generator(instance, filename):
+    return filename_generator(instance, filename, instance.folder_name)
 
 class Form(models.Model):
     title = models.CharField(max_length=255)
@@ -16,7 +19,12 @@ class Form(models.Model):
     groups = models.ManyToManyField(Group, related_name='forms')
     maximum_responses = models.PositiveSmallIntegerField(default=1)
 
+def question_filename_generator(instance, filename):
+    return filename_generator(instance, filename, 'forms\\questions')
+
+
 class Question(models.Model):
+
 
     TEXT_FIELD = 'TF'
     TEXT_AREA = 'TA'
@@ -32,9 +40,11 @@ class Question(models.Model):
         (IMAGE_UPLOAD, 'Image Upload'),
     )
 
+    folder_name = 'forms\\questions'
+
     form = models.ForeignKey('Form', on_delete=models.CASCADE)
     text = models.CharField(max_length=255, blank=True, null=True)
-    image = models.ImageField(upload_to=question_filename_generator, blank=True, null=True)
+    image = models.ImageField(upload_to=class_filename_generator, blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True)
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -70,37 +80,47 @@ class BaseResponse(models.Model):
         return self.user.get_full_name() + ' ' + self.form.title
 
 
+
+
 class FileBaseResponse(BaseResponse):
-    class_filename_generator = answer_filename_generator
     class_validators = []
+    folder_name = 'forms\\responses'
     file = models.FileField(upload_to=class_filename_generator, blank=True, validators=class_validators)
 
+    class Meta:
+        abstract = True
 
 class ImageBaseResponse(BaseResponse):
-    class_filename_generator = answer_filename_generator
     class_validators = []
+    folder_name = 'forms\\responses'
     image = models.ImageField(upload_to=class_filename_generator, blank=True)
+
+    class Meta:
+        abstract = True
 
 
 class TextBaseResponse(BaseResponse):
     class_validators = []
     text = models.TextField(blank=True, validators=class_validators) # Multiple Answers will have a list of answers seperated by a comma
 
+    class Meta:
+        abstract = True
+
 
 class CombinedBaseResponse(BaseResponse):
-    class_filename_generators = {
-        "file": answer_filename_generator,
-        "image": answer_filename_generator,
-    }
+
     class_validators = {
         "file": [],
         "image": [],
         "text": [],
     }
-
-    file = models.FileField(upload_to=class_filename_generators["file"], blank=True, validators=class_validators["file"])
-    image = models.ImageField(upload_to=class_filename_generators["image"], blank=True, validators=class_validators["image"])
+    folder_name = 'forms\\responses'
+    file = models.FileField(upload_to=class_filename_generator, blank=True, validators=class_validators["file"])
+    image = models.ImageField(upload_to=class_filename_generator, blank=True, validators=class_validators["image"])
     text = models.TextField(blank=True, validators=class_validators["text"])
+
+    class Meta:
+        abstract = True
 
 
 class FileResponse(FileBaseResponse):

@@ -31,6 +31,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'homework.apps.HomeworkConfig',
+    'exams.apps.ExamsConfig',
+    'staticpages.apps.StaticpagesConfig',
     'notes.apps.NotesConfig',
     'forms.apps.FormsConfig',
     'posts.apps.PostsConfig',
@@ -44,6 +47,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'custom_middleware.authentication.LoginRequiredMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -124,6 +128,6 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
-
+LOGIN_URL = '/admin/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'user.User'

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Posts</title>
+</head>
+<body>
+<ul>
+{% for post in object_list %}
+    <li>{{ post }}</li>
+{% empty %}
+    <li>No work yet.</li>
+{% endfor %}
+</ul>
+</body>
+</html>

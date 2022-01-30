@@ -3,13 +3,13 @@ from django.conf import settings
 # Create your models here.
 import json
 
-initial_data = {"blocks":[
+initial_data = [
  {
   "id": "kyysw8ccau2pi34yw2c",
   "html": "",
   "tag": "p"
  }
-]}
+]
 
 def get_data(): return initial_data
 
