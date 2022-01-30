@@ -11,3 +11,4 @@ urlpatterns = [
     path('new', views.NotebookFormView.as_view(), name='new'),
     path('<int:pk>/edit', views.NotebookUpdateView.as_view(), name='edit'),
 ]
+
