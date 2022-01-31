@@ -22,9 +22,9 @@ class ClassCreateView(FormView):
     success_url = '/classes/'
 
     def form_valid(self, form):
-        form.save(commit=False)
-        form.created_by = self.request.user
-        form.save()
+        cls = form.save(commit=False)
+        cls.created_by = self.request.user
+        cls.save()
         return super().form_valid(form)
 
 
