@@ -53,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         unique=True,
     )
     id = models.AutoField(primary_key=True)
-    user_id = models.CharField(max_length=10, unique=True, null=False, blank=False)
+    user_id = models.CharField(max_length=10, unique=True, null=False, blank=False, editable=False)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     user_type = models.CharField(max_length=2, choices=USER_TYPE_CHOICES, default=STUDENT, blank=True)
@@ -83,5 +83,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     def save(self, *args, **kwargs):
         """Saves the user"""
 
-        self.user_id = 'BE/' + str(  datetime.datetime.now().year )[-2:]  + str( self.id ).zfill(5)
+        print("calledmodelsave")
+        print("self.id:",self.id)
         super().save(*args, **kwargs)
+        if self.user_id is None or self.user_id == "":
+            user_id = 'BE/' + str(datetime.datetime.now().year)[-2:] + str(self.id).zfill(5)
+            print("model save called: ", user_id)
+            self.user_id = user_id
+            self.save()
