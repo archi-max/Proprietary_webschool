@@ -6,4 +6,3 @@ from django.views.generic.base import TemplateView
 
 #TODO: Group ADD
 #TODO: Permissions
-
