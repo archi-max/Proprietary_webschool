@@ -21,5 +21,6 @@ urlpatterns = [
     path('posts/',include('posts.urls')),
     path('homework/',include('homework.urls')),
     path('notes/',include('notes.urls')),
+    path('classes/',include('classes.urls')),
     path('',include('user.urls')),
 ]
