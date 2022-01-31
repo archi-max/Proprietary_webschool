@@ -1,14 +1,13 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Announcements</title>
-</head>
-<body>
-<form method="post" enctype="multipart/form-data">
-{{ form }}
-    {%  csrf_token %}
-    <button type="submit">Submit</button>
-    </form>
-</body>
+<html>
+  {% include "head.html" %}
+  
+    <body>
+        <form method="post" enctype="multipart/form-data">
+        {{ form }}
+            {%  csrf_token %}
+            <button type="submit">Submit</button>
+        </form>
+    </body>
 </html>

@@ -59,7 +59,7 @@ class SubmissionListView(ListView):
 class WorkUpdateView(UpdateView):
     model = Work
     fields = ['title', 'description',  'upload_by', 'groups', 'work_type']
-    template_name = 'homework/form.html'
+    template_name = 'homework/create.html'
     success_url = '/homework/'
 
 class SubmissionUpdateView(UpdateView):

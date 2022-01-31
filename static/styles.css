@@ -188,7 +188,9 @@ footer:hover {
 }
 
 .new-document,
-.homework-form {
+.homework-form,
+.new-announcement-form,
+.new-homework-form {
   display: flex;
   flex-direction: column;
   row-gap: 10px;
@@ -199,7 +201,9 @@ footer:hover {
 }
 
 .new-document button,
-.homework-form button {
+.homework-form button,
+.new-announcement-form button,
+.new-homework-form button {
   font-size: 13px;
   padding: 10px 15px;
   width: fit-content;
@@ -213,7 +217,23 @@ footer:hover {
 }
 
 .new-document button:hover,
-.homework-form button:hover {
+.homework-form button:hover,
+.new-announcement-form button:hover,
+.new-homework-form button:hover {
   background-color: #222;
   cursor: pointer;
+}
+
+.new-announcement-form input,
+.new-announcement-form textarea,
+.new-homework-form input,
+.new-homework-form textarea {
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+  resize: vertical;
+}
+
+input[type="date"] {
+  resize: none;
 }

@@ -16,7 +16,7 @@ class PostListView(ListView):
 
 
 class PostFormView(FormView):
-    template_name = 'posts/post_form.html'
+    template_name = 'posts/create.html'
     form_class = PostForm
     success_url = '/posts/'
 
@@ -36,7 +36,7 @@ class PostsCreatedViews(PostListView):
 
 class PostUpdateView(UpdateView):
     model = Post
-    template_name = 'posts/post_form.html'
+    template_name = 'posts/create.html'
     success_url = '/posts/'
     # exclude = ['created_by', 'created_at', 'updated_at']
     fields = ['title', 'description', 'file', 'tags', 'groups', 'is_active']
