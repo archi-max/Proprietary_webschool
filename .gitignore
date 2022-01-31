@@ -2,7 +2,7 @@
 /venv/
 /db.sqlite3
 /notebook.html
-
+/UploadedFiles/
 __pycache__/
 *.py[cod]
 *.pyc
