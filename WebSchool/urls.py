@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,4 +24,5 @@ urlpatterns = [
     path('notes/',include('notes.urls')),
     path('classes/',include('classes.urls')),
     path('',include('user.urls')),
+    path('',RedirectView.as_view(url='/posts/')),
 ]

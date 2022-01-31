@@ -12,11 +12,18 @@
         <div class="announcements">
           {% for announcement in announcements %}
           <div class="announcement">
-            <h2 class="announcement-title">{{announcement.title}}</h2>
-            <p class="announcement-description">
-              {{announcement.description}}
-            </p>
-            <span class="announcement-date">{{announcement.date}}</span>
+            <div style="display: flex; align-items: center; justify-content: space-between">
+                <div>
+                    <h2 class="announcement-title">{{announcement.title}} </h2>
+                    <p class="announcement-description">
+                        {{announcement.description}}
+                    </p>
+                    <span class="announcement-date">{{announcement.date}}</span>
+                </div>
+                <div>
+                    {% if announcement.file %}<a class="bi bi-paperclip" href="{{ announcement.file }}" download></a>{% endif %}
+                </div>
+            </div>
           </div>
           {% empty %}
           <div class="">
