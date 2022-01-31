@@ -1,0 +1,20 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  {% include "head.html" %}
+  
+  <body>
+    <!--<script src="script.js"></script>-->
+    <main>
+      {% include "navbar.html" %}    
+      <section id="right-section">
+        <h1 class="section-heading">New Announcement</h1>
+        <form class="new-announcement-form" method="post" enctype="multipart/form-data"> {{ form }}{%  csrf_token %}
+          <!--<input type="text" placeholder="Title" />
+          <textarea placeholder="Description"></textarea>-->
+          <button>Submit</button>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

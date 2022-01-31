@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  {% include "head.html" %}
+  
+  <body>
+    <!--<script src="script.js"></script>-->
+    <main>
+      {% include "navbar.html" %}    
+      <section id="right-section">
+        <h1 class="section-heading">New Homework</h1>
+        <form class="new-homework-form">
+          <input type="text" placeholder="Title" />
+          <input type="date" />
+          <textarea placeholder="Description"></textarea>
+          <button>Submit</button>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>
