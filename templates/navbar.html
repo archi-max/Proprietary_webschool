@@ -1,27 +1,27 @@
 <section id="left-section">
-    <div>
-      <i class="bi bi-house"></i>
-      <a href="./index.html">Home</a>
-    </div>
+{#    <div>#}
+{#      <i class="bi bi-house"></i>#}
+{#      <a href="./index.html">Home</a>#}
+{#    </div>#}
     <div>
       <i class="bi bi-person"></i>
-      <a href="./profile.html">Profile</a>
+      <a href="{% url 'user:user_list' %}">Profile</a>
     </div>
     <div class="">
       <i class="bi bi-exclamation-circle"></i>
-      <a href="./announcements.html">Announcements</a>
+      <a href="{% url 'posts:view' %}">Announcements</a>
     </div>
     <div>
       <i class="bi bi-file-check"></i>
-      <a href="./homework.html">Homework</a>
+      <a href="{% url 'homework:work_list' %}">Homework</a>
     </div>
-    <div>
-      <i class="bi bi-list-ol"></i>
-      <a href="./tests.html">Tests</a>
-    </div>
+{#    <div>#}
+{#      <i class="bi bi-list-ol"></i>#}
+{#      <a href="">Tests</a>#}
+{#    </div>#}
     <div>
       <i class="bi bi-file-earmark-binary"></i>
-      <a href="./documents.html">Documents</a>
+      <a href="{% url 'notes:list' %}">Notebooks</a>
     </div>
-    <footer>Logout</footer>
+    <footer><a href="{% url 'user:logout' %}">Logout</a> </footer>
   </section>

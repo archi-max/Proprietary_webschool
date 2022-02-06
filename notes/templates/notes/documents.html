@@ -9,7 +9,7 @@
       {% include "navbar.html" %} 
       <section id="right-section">
         <h1 class="section-heading">Notebooks</h1>
-        <form class="new-document">
+        <form class="new-document" action="{% url 'notes:new' %}">
           <button>
             <i class="bi bi-pen"></i>
             <span>New</span>
@@ -19,7 +19,7 @@
         <div class="documents">
           {% for desc in object_list %}
           <div class="document">
-            <div>{{desc.notebook_id}}</div>            
+            <div>{{desc.title}}</div>
             <a href="http://localhost:3000/p/{{ desc.notebook_id }}" target="_blank">
               <i class="bi bi-pen"></i>
             </a>

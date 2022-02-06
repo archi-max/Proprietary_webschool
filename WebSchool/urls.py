@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import RedirectView
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +26,6 @@ urlpatterns = [
     path('notes/',include('notes.urls')),
     path('classes/',include('classes.urls')),
     path('',include('user.urls')),
-    path('',RedirectView.as_view(url='/posts/')),
-]
+    path('',RedirectView.as_view(url='/posts/'), name='index'),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

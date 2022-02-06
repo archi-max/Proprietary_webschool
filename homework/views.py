@@ -3,6 +3,20 @@ from django.views.generic.edit import CreateView, UpdateView
 from .models import Work, Submission
 from .forms import SubmissionForm, WorkForm
 # Create your views here.
+from django import template
+register = template.Library()
+
+def get_submission_file(work, user):
+    submission = Submission.objects.filter(work=work, user=user)
+    if submission:
+        return submission[0].file
+    else:
+        return None
+
+
+@register.filter
+def submission_file(work, user):
+    return get_submission_file(work, user)
 
 class SubmissionCreateView(CreateView):
     model = Submission
@@ -38,6 +52,12 @@ class WorkListView(ListView):
     model = Work
     template_name = 'homework/homework.html'
     success_url = '/homework/'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['submission_form'] = SubmissionForm()
+        context['submission_file'] = lambda x: get_submission_file(x, self.request.user)
+        return context
 
     def get_queryset(self):
         if self.request.user.user_type == self.request.user.TEACHER:

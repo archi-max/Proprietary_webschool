@@ -1,16 +1,317 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Posts</title>
-</head>
-<body>
-<ul>
-{% for post in object_list %}
-    <li>{{ post.title }}</li>
-{% empty %}
-    <li>No announcement yet.</li>
-{% endfor %}
-</ul>
-</body>
-</html>
+{% extends 'backend/base.html' %}
+
+
+
+{% block content %}
+
+
+
+
+    <div class="modal fade" id="description_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Description</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="modal fade" id="ann_create_modal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Announcement</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="newPostForm" action="{% url 'posts:create' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ create_form }}
+        </form>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="newPostButton">Save</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid">
+        <div class="desktop-header">
+            <div class="card card-block topnav-left">
+                <div class="card-body write-card">
+                     <div class="d-flex flex-wrap align-items-center justify-content-between">
+                           <h4>Announcements</h4>
+                           <div class="media flex-wrap align-items-center">
+                              <div class="iq-search-bar card-search mr-3 position-relative">
+                                 <a href="#" class="search-toggle rounded" id="dropdownSearch" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                       <i class="ri-search-line"></i>
+                                 </a>
+                                 <div class="iq-sub-dropdown dropdown-menu" aria-labelledby="dropdownSearch">
+{#                                       <form action="#" class="searchbox">#}
+                                          <div class="form-group mb-0 position-relative">
+                                          <input id="filterAnnouncements" type="text" class="text search-input font-size-12" placeholder="Search in announcements">
+                                          <a id="dropdownSearch" data-toggle="dropdown" href="#" class="search-link"><i class="ri-search-line"></i></a>
+                                          </div>
+{#                                       </form>#}
+                                 </div>
+                              </div>
+                              {% if request.user.is_teacher %}<a href="#" class="btn btn-primary add-btn" data-toggle="ann_create_modal" data-target="ann_create_modal"><i class="las la-plus pr-2"></i>New Announcement</a>{% endif %}
+                           </div>
+                     </div>
+                  </div>
+            </div>
+{#            <div class="card topnav-right">#}
+{##}
+{#                <div class="card-body card-content-right">#}
+{#                    <ul class="list-inline m-0 p-0 d-flex align-items-center justify-content-around">#}
+{#                        <li class="nav-item nav-icon dropdown">#}
+{#                            <a href="#" class="search-toggle dropdown-toggle nav-icon-1" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+{#                            <i class="">#}
+{#                                <svg width="20" class="svg-icon" id="main-n-01" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">#}
+{#                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" style="stroke-dasharray: 82, 102; stroke-dashoffset: 0;"></path>#}
+{#                                </svg>#}
+{#                            </i>#}
+{#                            <span class="badge badge-primary count-mail mail rounded-circle">2</span>#}
+{#                            <span class="bg-primary"></span>#}
+{#                            </a>#}
+{#                            <div class="iq-sub-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton2">#}
+{#                                <div class="card shadow-none m-0">#}
+{#                                    <div class="card-body p-0 ">#}
+{#                                        <div class="p-3">#}
+{#                                            <a href="#" class="iq-sub-card">#}
+{#                                                <div class="media align-items-center cust-card pb-3 border-bottom">#}
+{#                                                    <div class="">#}
+{#                                                        <img class="avatar-50 rounded-small" src="../assets/images/user/01.jpg" alt="01">#}
+{#                                                    </div>#}
+{#                                                    <div class="media-body ml-3">#}
+{#                                                        <div class="d-flex align-items-center justify-content-between">#}
+{#                                                            <h5 class="mb-0">Emma Watson</h5>#}
+{#                                                            <small class="text-dark"><b>12 : 47 pm</b></small>#}
+{#                                                        </div>#}
+{#                                                        <small class="mb-0">Lorem ipsum dolor sit amet</small>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </a>#}
+{#                                            <a href="#" class="iq-sub-card">#}
+{#                                                <div class="media align-items-center cust-card py-3 border-bottom">#}
+{#                                                    <div class="">#}
+{#                                                        <img class="avatar-50 rounded-small" src="../assets/images/user/02.jpg" alt="02">#}
+{#                                                    </div>#}
+{#                                                    <div class="media-body ml-3">#}
+{#                                                        <div class="d-flex align-items-center justify-content-between">#}
+{#                                                            <h5 class="mb-0">Ashlynn Franci</h5>#}
+{#                                                            <small class="text-dark"><b>11 : 30 pm</b></small>#}
+{#                                                        </div>#}
+{#                                                        <small class="mb-0">Lorem ipsum dolor sit amet</small>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </a>#}
+{#                                            <a href="#" class="iq-sub-card">#}
+{#                                                <div class="media align-items-center cust-card pt-3">#}
+{#                                                    <div class="">#}
+{#                                                        <img class="avatar-50 rounded-small" src="../assets/images/user/03.jpg" alt="03">#}
+{#                                                    </div>#}
+{#                                                    <div class="media-body ml-3">#}
+{#                                                        <div class="d-flex align-items-center justify-content-between">#}
+{#                                                            <h5 class="mb-0">Kianna Carder</h5>#}
+{#                                                            <small class="text-dark"><b>11 : 21 pm</b></small>#}
+{#                                                        </div>#}
+{#                                                        <small class="mb-0">Lorem ipsum dolor sit amet</small>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </a>#}
+{#                                        </div>#}
+{#                                        <a class="btn btn-block btn-primary position-relative text-center" href="#" role="button">#}
+{#                                            View All#}
+{#                                        </a>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </li>#}
+{#                        <li class="nav-item nav-icon dropdown pl-3">#}
+{#                            <a href="#" class="search-toggle dropdown-toggle nav-icon-1" id="dropdownMenuButton002" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
+{#                            <i class="">#}
+{#                                <svg width="20" class="svg-icon" id="main-n-02" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">#}
+{#                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" style="stroke-dasharray: 63, 83; stroke-dashoffset: 0;"></path>#}
+{#                                </svg>#}
+{#                            </i>#}
+{#                            <span class="badge badge-primary count-mail rounded-circle">2</span>#}
+{#                            <span class="bg-primary "></span>#}
+{#                            </a>#}
+{#                            <div class="iq-sub-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton002">#}
+{#                                <div class="card shadow-none m-0">#}
+{#                                    <div class="card-body p-0 ">#}
+{#                                        <div class="p-3">#}
+{#                                            <a href="#" class="iq-sub-card">#}
+{#                                                <div class="media align-items-center cust-card pb-3 border-bottom">#}
+{#                                                    <div class="">#}
+{#                                                        <img class="avatar-50 rounded-small" src="../assets/images/user/01.jpg" alt="01">#}
+{#                                                    </div>#}
+{#                                                    <div class="media-body ml-3">#}
+{#                                                        <div class="d-flex align-items-center justify-content-between">#}
+{#                                                            <h5 class="mb-0">Emma Watson</h5>#}
+{#                                                            <small class="text-dark"><b>12 : 47 pm</b></small>#}
+{#                                                        </div>#}
+{#                                                        <small class="mb-0">Lorem ipsum dolor sit amet</small>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </a>#}
+{#                                            <a href="#" class="iq-sub-card">#}
+{#                                                <div class="media align-items-center cust-card py-3 border-bottom">#}
+{#                                                    <div class="">#}
+{#                                                        <img class="avatar-50 rounded-small" src="../assets/images/user/02.jpg" alt="02">#}
+{#                                                    </div>#}
+{#                                                    <div class="media-body ml-3">#}
+{#                                                        <div class="d-flex align-items-center justify-content-between">#}
+{#                                                            <h5 class="mb-0">Ashlynn Franci</h5>#}
+{#                                                            <small class="text-dark"><b>11 : 30 pm</b></small>#}
+{#                                                        </div>#}
+{#                                                        <small class="mb-0">Lorem ipsum dolor sit amet</small>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </a>#}
+{#                                            <a href="#" class="iq-sub-card">#}
+{#                                                <div class="media align-items-center cust-card pt-3">#}
+{#                                                    <div class="">#}
+{#                                                        <img class="avatar-50 rounded-small" src="../assets/images/user/03.jpg" alt="03">#}
+{#                                                    </div>#}
+{#                                                    <div class="media-body ml-3">#}
+{#                                                        <div class="d-flex align-items-center justify-content-between">#}
+{#                                                            <h5 class="mb-0">Kianna Carder</h5>#}
+{#                                                            <small class="text-dark"><b>11 : 21 pm</b></small>#}
+{#                                                        </div>#}
+{#                                                        <small class="mb-0">Lorem ipsum dolor sit amet</small>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                            </a>#}
+{#                                        </div>#}
+{#                                        <a class="btn btn-block btn-primary position-relative text-center" href="#" role="button">#}
+{#                                            View All#}
+{#                                        </a>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                </div>           #}
+{#            </div>#}
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+               <div class="card card-block card-stretch card-height note-table">
+                  <div class="card-body custom-notes-space">
+                     <div class="table-responsive">
+                        <table id="announcements_table" class="table tree mb-0 tbl-server-info">
+                           <thead  class="bg-white text-uppercase">
+                              <tr class="ligth">
+                                 <th>Title</th>
+                                 <th>Created By</th>
+                                 <th>Updated</th>
+{#                                 <th>Shared With</th>#}
+                                 <th>Action</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                           {% for announcement in announcements %}
+                              <tr id="row_{{ announcement.id }}" data-id="1" data-parent="0" data-level="1">
+                                 <td data-column="name"><span class="treegrid-indent" style="width:15px"></span>{{ announcement.title }} </td>
+                                 <td>{{ announcement.created_by.get_full_name }}</td>
+                                 <td>{{ announcement.updated_at|date:"jS b Y" }}</td>
+                                 {#<td><i class="las la-lock mr-3 font-size-20"></i>Only You</td>#}
+                                 <td>
+                                    <div>
+                                        {% if announcement.description %}<a href="#" class="badge badge-primary" data-closest-elem="tr" data-toggle="description_modal" data-target="#description_modal"><i class="lar la-eye"></i><p style="display: none">{{ announcement.description }}</p> </a>{% endif %}
+                                        {% if announcement.created_by == request.user %}<a href="{% url 'posts:update' announcement.id %}" class="badge badge-success edit-note" data-toggle="modal" data-target="#edit-note"><i class="las la-pen mr-0"></i></a>{% endif %}
+                                        {% if announcement.created_by == request.user %}<form style="display: none" action="{% url 'posts:delete' announcement.id %}" method="POST" id="announcement_{{ announcement.id }}">{% csrf_token %}</form><a href="#" announcement_id="{{ announcement.id }}"class="badge badge-danger" data-extra-toggle="delete_announcement" data-closest-elem="tr"><i class="las la-trash-alt mr-0"></i></a> {% endif %}
+                                        {% if announcement.file %}<a href="{{ announcement.file.url }}" class="badge badge-info" download data-closest-elem="tr"><i class="las la-paperclip"></i></a>{% endif %}
+                                    </div>
+                                 </td>
+                              </tr>
+                            {% endfor %}
+
+                           </tbody> {# tbody end #}
+                        </table>
+                     <br>
+                     </div>
+                  </div>
+               </div>
+            </div>
+        </div>
+        <!-- Page end  -->
+    </div>
+{% endblock %}
+
+{% block custom_js %}
+    <script>
+    $('[data-toggle=description_modal]').on('click',function(){
+        $('#description_modal .modal-body').html($(this).find('p').html());
+        $('#description_modal').modal('show');
+    });
+    $('[data-toggle=ann_create_modal]').on('click',function(){
+        $('#ann_create_modal').modal('show');
+    });
+    $('#newPostButton').on('click',function() {
+        const form = $('#newPostForm');
+        form.trigger('submit');
+    });
+    $('#filterAnnouncements').on('keyup',function() {
+        {#alert("hi");#}
+
+        const selection = $(this).val();
+        console.log("val: "+selection);
+        const dataset = $('#announcements_table tbody').find('tr');
+        dataset.show()
+        dataset.filter(function(index, item){
+  return $(item).find("td[data-column=name]").text().toLowerCase().indexOf(selection.toLowerCase()) === -1;
+}).hide();
+    });
+
+    {#   $.ajax({#}
+    {#       url: form.attr('action'),#}
+    {#       type: form.attr('method'),#}
+    {#       data: form.serialize(),#}
+    {#       method: 'POST',#}
+    {#       success: function(data){#}
+    {#           $('#ann_create_modal').modal('hide');#}
+    {#           $('#newPostForm')[0].reset();#}
+    {#           $('#announcements_table').append(data);#}
+    {#       },#}
+    {#   })#}
+    {# }); #}
+    </script>
+{% endblock %}
+
+
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Posts</title>#}
+{#</head>#}
+{#<body>#}
+{#<ul>#}
+{#{% for post in object_list %}#}
+{#    <li>{{ post.title }}</li>#}
+{#{% empty %}#}
+{#    <li>No announcement yet.</li>#}
+{#{% endfor %}#}
+{#</ul>#}
+{#</body>#}
+{#</html>#}
