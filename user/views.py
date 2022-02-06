@@ -1,6 +1,8 @@
 from django.contrib.auth import  get_user_model
 from django.http import HttpResponse
+from django.views.generic.edit import UpdateView
 import csv
+from django.urls import reverse
 
 User = get_user_model()
 
@@ -15,3 +17,13 @@ def export_users(request):
         writer.writerow([user.user_id, user.email, user.first_name, user.last_name])
 
     return response
+
+
+class UserUpdateView(UpdateView):
+    model = User
+    template_name = 'user/profile.html'
+    success_url = '/'
+    fields = '__all__'
+
+    def get_object(self, queryset=None):
+        return self.request.user

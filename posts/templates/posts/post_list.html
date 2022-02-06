@@ -278,7 +278,19 @@
         const dataset = $('#announcements_table tbody').find('tr');
         dataset.show()
         dataset.filter(function(index, item){
-  return $(item).find("td[data-column=name]").text().toLowerCase().indexOf(selection.toLowerCase()) === -1;
+            console.log("filter result: "+($(item).children('td').eq(1).text().toLowerCase().indexOf(selection.toLowerCase()) === -1).toString())
+            if ($(item).find("td[data-column=name]").text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
+                return false;
+            } if ($(item).children('td').eq(1).text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
+                return false;
+            } if ($(item).children('td').eq(2).text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
+                return false;
+            } if ($(item).children('td').eq(3).find('p').text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
+                return false;
+            } else {
+                return true;
+            }
+            ;
 }).hide();
     });
 

@@ -17,36 +17,28 @@
             <i class="las la-angle-down"></i>
         </a>
         <div class="dropdown-menu w-100 border-0 my-2" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item mb-2" href="../app/user-profile.html">
+            <a class="dropdown-item mb-2" href="{% url 'user:profile' %}">
                 <i class="lar la-user-circle font-size-20 mr-1"></i>
                 <span class="mt-2">My Profile</span>
             </a>
-            <a class="dropdown-item mb-2" href="../app/user-profile-edit.html">
-                <i class="las la-user-edit font-size-20 mr-1"></i>
-                <span>Edit Profile</span>
-            </a>
-            <a class="dropdown-item mb-2" href="../app/user-account-setting.html">
-                <i class="las la-user-cog font-size-20 mr-1"></i>
-                <span>Account Settings</span>
-            </a>
-            <a class="dropdown-item mb-3" href="../app/user-privacy-setting.html">
-                <i class="las la-user-shield font-size-20 mr-1"></i>
-                <span>Privacy Settings</span>
-            </a>
+{#            <a class="dropdown-item mb-2" href="../app/user-profile-edit.html">#}
+{#                <i class="las la-user-edit font-size-20 mr-1"></i>#}
+{#                <span>Edit Profile</span>#}
+{#            </a>#}
             <hr class="my-2">
-            <a class="dropdown-item" href="../backend/auth-sign-in.html">
+            <a class="dropdown-item" href="{% url 'user:logout' %}">
                 <i class="las la-sign-out-alt font-size-20 mr-1"></i>
                 <span>Logout</span>
             </a>
         </div>
     </div>
     <div class="data-scrollbar" data-scroll="1">
-        <div class="iq-search-bar device-search mb-3">
-            <form action="#" class="searchbox">
-            <a class="search-link" href="#"><i class="ri-search-line"></i></a>
-            <input type="text" class="text search-input" placeholder="Search">
-            </form>
-        </div>
+{#        <div class="iq-search-bar device-search mb-3">#}
+{#            <form action="#" class="searchbox">#}
+{#            <a class="search-link" href="#"><i class="ri-search-line"></i></a>#}
+{#            <input type="text" class="text search-input" placeholder="Search">#}
+{#            </form>#}
+{#        </div>#}
         <!-- <div class="sidebar-btn dropdown mb-3">
             <a href="#"  id="dropdownMenuButton01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-primary pr-5 position-relative iq-user-toggle d-flex align-items-center justify-content-between" style="height: 40px;"><span class="btn-title"><i class="ri-add-line mr-3"></i>Add New</span><span class="note-add-btn" style="height: 40px;"><i class="las la-angle-down"></i></span></a>
             <div class="dropdown-menu w-100 border-0 py-3" aria-labelledby="dropdownMenuButton01">
@@ -67,13 +59,13 @@
         <nav class="iq-sidebar-menu">
             <ul id="iq-sidebar-toggle" class="iq-menu">
                 <li class="active">
-                        <a href="../backend/index.html" class="svg-icon">
+                        <a href="{% url 'posts:view' %}" class="svg-icon">
                             <i>
                                 <svg class="svg-icon" id="iq-main-1" width="20" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                                 </svg>
                             </i>
-                            <span>Your Notes</span>
+                            <span>Announcements</span>
                         </a>
                     <ul id="index" class="iq-submenu collapse" data-parent="#iq-sidebar-toggle">
                     </ul>
