@@ -53,15 +53,18 @@
                          <div class=" row align-items-center">
                             <div class="form-group col-sm-6">
                                <label for="fname">First Name:</label>
-                               <input name="first_name" type="text" class="form-control" id="fname" value="{{ form.first_name.value }}" style="cursor: auto;">
+                               <input name="first_name" type="text" class="form-control {% if form.first_name.errors %}is-invalid{% endif %}" id="fname" value="{{ form.first_name.value }}" style="cursor: auto;">
+                                <div class="invalid-feedback"> {% if form.first_name.errors %}{{ form.first_name.errors }}{% endif %} </div>
                             </div>
                             <div class="form-group col-sm-6">
                                <label for="lname">Last Name:</label>
-                               <input name="last_name" type="text" class="form-control" id="lname" value="{{ form.last_name.value }}">
+                               <input name="last_name" type="text" class="form-control {% if form.last_name.errors %}is-invalid{% endif %}" id="lname" value="{{ form.last_name.value }}">
+                                <div class="invalid-feedback"> {% if form.last_name.errors %}{{ form.last_name.errors }}{% endif %} </div>
                             </div>
                             <div class="form-group col-sm-6">
                                <label for="uname">User Name:</label>
-                               <input name="email" type="email" class="form-control" id="uname" value="{{ form.email.value }}">
+                               <input name="email" type="email" class="form-control {% if form.email.errors %}is-invalid{% endif %}" id="uname" value="{{ form.email.value }}">
+                                <div class="invalid-feedback"> {% if form.email.errors %}{{ form.email.errors }}{% endif %} </div>
                             </div>
 
 
@@ -86,14 +89,17 @@
                             <label for="cpass">Current Password:</label>
                             <a href="javascripe:void();" class="float-right">Forgot Password</a>
                             <input type="Password" name="old_password" class="form-control" id="cpass" value="" >
+                             <div class="invalid-feedback"></div>
                          </div>
                          <div class="form-group">
                             <label for="npass">New Password:</label>
                             <input type="Password" name="new_password1" class="form-control" id="npass" value="">
+                             <div class="invalid-feedback"></div>
                          </div>
                          <div class="form-group">
                             <label for="vpass">Verify Password:</label>
                             <input type="Password" name="new_password2" class="form-control" id="vpass" value="" >
+                             <div class="invalid-feedback"></div>
                          </div>
                          <button type="submit" class="btn btn-primary mr-2">Change</button>
                       </form>
@@ -111,7 +117,7 @@
 {% block custom_js %}
     <script>
         $('#passwordchange').on('submit', function (){
-            var form = $(this);
+            const form = $(this);
             var url = form.attr('action');
             const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
@@ -125,48 +131,36 @@
                 url: url,
                 data: form.serialize(),
                 success: function (data) {
-                    if (data.success) {
-                        $('#passwordchange').reset();
-                        swalWithBootstrapButtons.fire({
-                                title: 'Changed!',
-                                text: "Your password has been changed.",
+                    form.find('.is-invalid').removeClass('is-invalid');
+                    try {
+                        if (JSON.parse(data) == 'success') {
+                            swalWithBootstrapButtons.fire({
+                                title: 'Success!',
                                 icon: 'success',
-                                showClass: {
-                                    popup: 'animate__animated animate__zoomIn'
-                                },
-                                hideClass: {
-                                    popup: 'animate__animated animate__zoomOut'
-                                }
-                            }
-                          ).then(() => {
+                                text: "successfully changed the password",
+                                type: 'success',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                reverseButtons: true
+                            }).then((result) => {
+                                form.reset();
 
-                              if (closestElem == '.card') {
-                                $(this).closest(closestElem).parent().remove()
-                              } else {
-                                $(this).closest(closestElem).remove()
-                              }
-                          })
-                    } else {
-                        swalWithBootstrapButtons.fire({
-                                title: 'Error!',
-                                text: "Your password could not be changed. Please check your fields again",
-                                icon: 'error',
-                                showClass: {
-                                    popup: 'animate__animated animate__zoomIn'
-                                },
-                                hideClass: {
-                                    popup: 'animate__animated animate__zoomOut'
+                            })
+                        } else {
+                            const data_json = JSON.parse(data);
+                            for (const [key, value] of Object.entries(data_json)) {
+                                console.log(key, value);
+                                  const fields = form.find("[name=" + key + "]");
+                                  console.log(fields)
+                                  fields.addClass('is-invalid');
+                                  fields.parent().find('.invalid-feedback').text(value[0]["message"]);
                                 }
-                            }
-                          ).then(() => {
-
-                              if (closestElem == '.card') {
-                                $(this).closest(closestElem).parent().remove()
-                              } else {
-                                $(this).closest(closestElem).remove()
-                              }
-                          })
+                        }
+                    } catch (e) {
+                        console.log(data)
                     }
+
+
                 }
             });
             return false;
