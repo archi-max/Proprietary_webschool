@@ -1,6 +1,7 @@
 from django.contrib.auth import  get_user_model
 from django.http import HttpResponse
-from django.views.generic.edit import UpdateView
+from django.shortcuts import render
+from django.views.generic.edit import UpdateView, CreateView
 import csv
 from django.contrib.auth import views as auth_views
 from django.urls import reverse
@@ -23,13 +24,35 @@ def export_users(request):
 class UserUpdateView(UpdateView):
     model = User
     template_name = 'user/profile.html'
-    success_url = '/'
-    fields = '__all__'
+    success_url = '/profile/'
+    fields = ('avatar', 'first_name', 'last_name', 'email')
 
     def get_object(self, queryset=None):
         return self.request.user
 
+    def form_valid(self, form):
+        print("form validating")
+        print(form.files)
+        return super().form_valid(form)
+
+def custom_update_view(request):
+    if request.method == 'POST':
+        pass
+
+    return render(request, 'user/profile.html', {'user': request.user})
 
 class UserLogoutView(auth_views.LogoutView):
     model = User
     success_url = "/login"
+
+
+class UserCreateView(CreateView):
+    model = User
+    template_name = 'user/user_add.html'
+    success_url = '#'
+    fields = ( 'first_name', 'last_name', 'email', 'password', 'user_type', 'avatar')
+
+    def form_valid(self, form):
+        print("form validating")
+        print(form.field['password1'])
+        return super().form_valid(form)

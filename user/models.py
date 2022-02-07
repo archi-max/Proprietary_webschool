@@ -3,10 +3,14 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, PermissionsMixin
 )
 import datetime
+from utils.files import filename_generator
+
+def avatar_filename_generator(x, y):
+    return filename_generator(x, y, 'avatars')
 
 # Create your models here.
 class UserManager(BaseUserManager):
-    def create_user(self, first_name, last_name, email,is_admin=None, user_type=None, password=None):
+    def create_user(self, first_name, last_name, email,is_admin=None, user_type=None, password=None, user_id=None):
         """Creates User with first_name, last_name, email"""
 
         if not any([first_name, last_name, email,is_admin]):
@@ -29,7 +33,7 @@ class UserManager(BaseUserManager):
     def create_superuser(self, *args, **kwargs):
         """Creates Superuser"""
 
-        if kwargs.get('id'): del kwargs['id'] # remove id from kwargs as it is a required field because its username but its auto
+        if kwargs.get('user_id'): del kwargs['user_id'] # remove id from kwargs as it is a required field because its username but its auto
         kwargs['is_admin'] = True
         user = self.create_user(*args, **kwargs)
         user.is_superuser = True
@@ -52,6 +56,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=255,
         unique=True,
     )
+    avatar = models.ImageField(upload_to=avatar_filename_generator, default='default/images/default_avatar.jpg')
     id = models.AutoField(primary_key=True)
     user_id = models.CharField(max_length=10, unique=True, null=False, blank=False, editable=False)
     first_name = models.CharField(max_length=50)
@@ -90,7 +95,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         print("calledmodelsave")
         print("self.id:",self.id)
         super().save(*args, **kwargs)
-        if self.user_id is None or self.user_id == "":
+        if self.user_id is None or self.user_id == "" or not self.user_id.startswith("BE"):
             user_id = 'BE/' + str(datetime.datetime.now().year)[-2:] + str(self.id).zfill(5)
             print("model save called: ", user_id)
             self.user_id = user_id

@@ -312,13 +312,15 @@ $(document).ready(function(){
 $(document).ready(function() {
     var readURL = function(input) {
         if (input.files && input.files[0]) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                $('.profile-pic').attr('src', e.target.result);
-            }
-
-            reader.readAsDataURL(input.files[0]);
+            // var reader = new FileReader();
+            //
+            // reader.onload = function (e) {
+            //     $('.profile-pic').attr('src', e.target.result);
+            // }
+            //
+            // reader.readAsDataURL(input.files[0]);
+            const image_url = URL.createObjectURL(input.files[0])
+            $('[alt=profile-pic]').attr('src', image_url)
         }
     }
 

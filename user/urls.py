@@ -9,4 +9,5 @@ urlpatterns = [
     path('users/export/', views.export_users, name='user_list'),
     path('profile/', views.UserUpdateView.as_view(), name='profile'),
     path('changepassword/', auth_views.PasswordChangeView.as_view(template_name="backend/form_error.html", success_url="/formsuccess/"), name='changepassword'),
+    path('user/add/', views.UserCreateView.as_view(), name='user_add'),
 ]
