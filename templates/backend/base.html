@@ -113,8 +113,11 @@
     <!-- app JavaScript -->
     <script src="{% static 'assets/js/app.js' %}"></script>
 
+    <!-- Print JavaScript -->
+    <script type="text/JavaScript" src="{% static 'assets/js/jQuery.print.js' %}"></script>
+
     <!-- Custom JavaScript -->
-  {% block custom_js %}
-  {% endblock %} %}
+    {% block custom_js %}
+    {% endblock %} %}
   </body>
 </html>
