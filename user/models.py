@@ -75,6 +75,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.first_name
 
     @property
+    def is_teacher(self):
+        return self.user_type == self.TEACHER
+
+    @property
     def is_staff(self):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff

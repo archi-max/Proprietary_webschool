@@ -227,13 +227,73 @@ footer:hover {
 .new-announcement-form input,
 .new-announcement-form textarea,
 .new-homework-form input,
-.new-homework-form textarea {
+.new-homework-form textarea,
+.new-announcement-form select,
+.new-homework-form select {
   padding: 10px 15px;
   border-radius: 5px;
   border: 1px solid #aaa;
+}
+
+.new-announcement-form textarea,
+.new-homework-form textarea {
   resize: vertical;
 }
 
-input[type="date"] {
-  resize: none;
+.ar-cards {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  row-gap: 15px;
+}
+
+.ar-card {
+  width: 220px;
+  height: 300px;
+  justify-self: center;
+  box-shadow: var(--shadow);
+  border-radius: 7px;
+  background-color: white;
+}
+
+.ar-card-image {
+  width: 100%;
+  height: 50%;
+  overflow: hidden;
+  border-radius: 7px;
+}
+
+.ar-card-image img {
+  width: 100%;
+  height: 100%;
+}
+
+.ar-card-bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 50%;
+  padding: 10px;
+  position: relative;
+}
+
+.ar-card-bottom a {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  padding: 10px;
+  background-color: #444;
+  color: white;
+  border-radius: 0 0 5px 5px;
+  text-align: center;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.ar-card-bottom a:hover {
+  background-color: #222;
+}
+
+.ar-card-text {
+  font-size: 15px;
 }

@@ -11,23 +11,35 @@
         <div class="homeworks">
           {% for post in object_list %}
           <div class="homework">
-            <h2 class="homework-title">{{ post.title }}</h2>
-            <p class="homework-description">
-              {{ post.description }}
-            </p>
-            <span class="homework-start">Updated at {{ post.updated_at|date:"nS F o" }}</span>
-            <span class="homework-due">Endline {{ post.upload_by|date:"nS F o" }}</span>
-            <form class="homework-form">
-              <input type="file" id="file" />
+              <div style="display: flex; align-items: center; justify-content: space-between">
+                  <div>
+                      <h2 class="homework-title">{{ post.title }}</h2>
+                      <p class="homework-description">
+                        {{ post.description }}
+                      </p>
+                  </div>
+                  <div>
+                      <span class="homework-start">Created on: {{ post.updated_at|date:"nS F o" }}</span>
+                      <span class="homework-due">Deadline: {{ post.upload_by|date:"nS F o" }}</span>
+                  </div>
+              </div>
+
+
+            <form class="homework-form" method="post" action="{% url 'homework:submission_create' post.id %}">
+{#              <input type="file" id="file" />#}
+                {{ submission_form.file }}
+
+                {% csrf_token %}
               <button>
                 <i class="bi bi-upload"></i>
                 <span>Upload</span>
               </button>
             </form>
+
           </div>
           {% empty %}
           <p class="homework-description">
-            No work now YeY
+            No work right now YeY
           </p>
           {% endfor %}       
         </div>

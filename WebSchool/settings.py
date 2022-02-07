@@ -135,3 +135,6 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/posts/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'user.User'
+
+MEDIA_URL = '/UploadedFiles/'
+MEDIA_ROOT = BASE_DIR / 'UploadedFiles'

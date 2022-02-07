@@ -3,6 +3,7 @@ from .models import Post
 
 class PostForm(forms.ModelForm):
 
+    template_name = 'posts/forms/post_create_form_snippet.html'
     class Meta:
         model = Post
         exclude = ('created_by',)

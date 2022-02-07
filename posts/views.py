@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.list import ListView
-from django.views.generic.edit import FormView, UpdateView
+from django.views.generic.edit import FormView, UpdateView, DeleteView
 from .models import Post
 from .forms import PostForm
 
@@ -9,10 +9,15 @@ from .forms import PostForm
 
 class PostListView(ListView):
     model = Post
-    template_name = 'posts/announcements.html'
+    template_name = 'posts/post_list.html'
     context_object_name = "announcements"
     def get_queryset(self):
         return Post.objects.filter(groups__in=self.request.user.groups.all()).order_by('-updated_at').distinct()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['create_form'] = PostForm()
+        return context
 
 
 class PostFormView(FormView):
@@ -40,3 +45,8 @@ class PostUpdateView(UpdateView):
     success_url = '/posts/'
     # exclude = ['created_by', 'created_at', 'updated_at']
     fields = ['title', 'description', 'file', 'tags', 'groups', 'is_active']
+
+class PostDeleteView(DeleteView):
+    model = Post
+    success_url = '/posts/'
+    template_name = 'posts/post_list.html'
