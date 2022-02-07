@@ -7,7 +7,7 @@ from django import template
 register = template.Library()
 
 def get_submission_file(work, user):
-    submission = Submission.objects.filter(work=work, user=user)
+    submission = Submission.objects.filter(work_id=work.id, student_id=user.id)
     if submission:
         return submission[0].file
     else:
@@ -50,13 +50,20 @@ class WorkCreateView(CreateView):
 
 class WorkListView(ListView):
     model = Work
-    template_name = 'homework/homework.html'
+    template_name = 'homework/documents.html'
     success_url = '/homework/'
+    context_object_name = 'homeworks'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['submission_form'] = SubmissionForm()
-        context['submission_file'] = lambda x: get_submission_file(x, self.request.user)
+        dat = []
+        for hw in context['homeworks']:
+            sf = get_submission_file(hw, self.request.user)
+            dat.append((sf, hw))
+        print(dat)
+        context['homeworks'] = dat
+        # context['submission_form'] = SubmissionForm()
+        # context['submission_file'] = lambda x: get_submission_file(x, self.request.user)
         return context
 
     def get_queryset(self):
