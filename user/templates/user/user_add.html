@@ -14,6 +14,7 @@
   </div>        </div>
 <div class="container-fluid">
  <div class="row">
+    {% csrf_token %}
     <div class="col-xl-3 col-lg-4">
           <div class="card">
              <div class="card-header d-flex justify-content-between">
@@ -22,7 +23,6 @@
                 </div>
              </div>
              <div class="card-body">
-                <form>
                    <div class="form-group text-center">
                       <div class="d-flex justify-content-center">
                          <div class="crm-profile-img-edit">
@@ -52,10 +52,6 @@
                       </select>
                    </div>
 
-
-
-
-                </form>
              </div>
           </div>
     </div>
@@ -68,7 +64,6 @@
              </div>
              <div class="card-body">
                 <div class="new-user-info">
-                   <form _lpchecked="1">
                       <div class="row">
                          <div class="form-group col-md-6">
                             <label for="fname">First Name:</label>
@@ -80,15 +75,19 @@
                          </div>
 
 
-
-
-
-
                          <div class="form-group col-md-6">
                             <label for="email">Email:</label>
                             <input type="email" name="email" class="form-control" id="email" placeholder="Email">
                          </div>
 
+                        <div class="form-group col-md-6">
+                            <label for="id_groups">Groups:</label>
+                            <select name="groups" id="id_groups" multiple class="form-control">
+                                {% for x, y in form.fields.groups.choices %}
+                                    <option value="{{ x }}"{% if form.fields.groups.value == x %} selected{% endif %}>{{ y }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
 
                       </div>
                       <hr>
@@ -97,21 +96,108 @@
 
                          <div class="form-group col-md-6">
                             <label for="pass">Password:</label>
-                            <input type="password" name="password1" class="form-control" id="pass" placeholder="Password" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACIUlEQVQ4EX2TOYhTURSG87IMihDsjGghBhFBmHFDHLWwSqcikk4RRKJgk0KL7C8bMpWpZtIqNkEUl1ZCgs0wOo0SxiLMDApWlgOPrH7/5b2QkYwX7jvn/uc//zl3edZ4PPbNGvF4fC4ajR5VrNvt/mo0Gr1ZPOtfgWw2e9Lv9+chX7cs64CS4Oxg3o9GI7tUKv0Q5o1dAiTfCgQCLwnOkfQOu+oSLyJ2A783HA7vIPLGxX0TgVwud4HKn0nc7Pf7N6vV6oZHkkX8FPG3uMfgXC0Wi2vCg/poUKGGcagQI3k7k8mcp5slcGswGDwpl8tfwGJg3xB6Dvey8vz6oH4C3iXcFYjbwiDeo1KafafkC3NjK7iL5ESFGQEUF7Sg+ifZdDp9GnMF/KGmfBdT2HCwZ7TwtrBPC7rQaav6Iv48rqZwg+F+p8hOMBj0IbxfMdMBrW5pAVGV/ztINByENkU0t5BIJEKRSOQ3Aj+Z57iFs1R5NK3EQS6HQqF1zmQdzpFWq3W42WwOTAf1er1PF2USFlC+qxMvFAr3HcexWX+QX6lUvsKpkTyPSEXJkw6MQ4S38Ljdbi8rmM/nY+CvgNcQqdH6U/xrYK9t244jZv6ByUOSiDdIfgBZ12U6dHEHu9TpdIr8F0OP692CtzaW/a6y3y0Wx5kbFHvGuXzkgf0xhKnPzA4UTyaTB8Ph8AvcHi3fnsrZ7Wore02YViqVOrRXXPhfqP8j6MYlawoAAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;">
+                            <input type="password" name="password" class="form-control" id="pass" placeholder="Password" >
                          </div>
                          <div class="form-group col-md-6">
                             <label for="rpass">Repeat Password:</label>
-                            <input type="password" name="password2" class="form-control" id="rpass" placeholder="Repeat Password " style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACIUlEQVQ4EX2TOYhTURSG87IMihDsjGghBhFBmHFDHLWwSqcikk4RRKJgk0KL7C8bMpWpZtIqNkEUl1ZCgs0wOo0SxiLMDApWlgOPrH7/5b2QkYwX7jvn/uc//zl3edZ4PPbNGvF4fC4ajR5VrNvt/mo0Gr1ZPOtfgWw2e9Lv9+chX7cs64CS4Oxg3o9GI7tUKv0Q5o1dAiTfCgQCLwnOkfQOu+oSLyJ2A783HA7vIPLGxX0TgVwud4HKn0nc7Pf7N6vV6oZHkkX8FPG3uMfgXC0Wi2vCg/poUKGGcagQI3k7k8mcp5slcGswGDwpl8tfwGJg3xB6Dvey8vz6oH4C3iXcFYjbwiDeo1KafafkC3NjK7iL5ESFGQEUF7Sg+ifZdDp9GnMF/KGmfBdT2HCwZ7TwtrBPC7rQaav6Iv48rqZwg+F+p8hOMBj0IbxfMdMBrW5pAVGV/ztINByENkU0t5BIJEKRSOQ3Aj+Z57iFs1R5NK3EQS6HQqF1zmQdzpFWq3W42WwOTAf1er1PF2USFlC+qxMvFAr3HcexWX+QX6lUvsKpkTyPSEXJkw6MQ4S38Ljdbi8rmM/nY+CvgNcQqdH6U/xrYK9t244jZv6ByUOSiDdIfgBZ12U6dHEHu9TpdIr8F0OP692CtzaW/a6y3y0Wx5kbFHvGuXzkgf0xhKnPzA4UTyaTB8Ph8AvcHi3fnsrZ7Wore02YViqVOrRXXPhfqP8j6MYlawoAAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;">
+                            <input type="password" name="password1" class="form-control" id="rpass" placeholder="Repeat Password ">
                          </div>
                       </div>
 
-                      <button type="submit" class="btn btn-primary">Add New User</button>
-                   </form>
+                      <button id="useradd_submit" type="submit" class="btn btn-primary">Add New User</button>
                 </div>
              </div>
           </div>
     </div>
  </div>
 </div>
+{% endblock %}
 
+
+{% block custom_js %}
+    <script>
+        $("#useradd_submit").on('click', function() {
+            var mydata = {}
+            var data1 = new FormData();
+
+            $("input").each(function(i) {
+                const item = $(this)
+                mydata[item.attr('name')] = item.val();
+                data1.append(item.attr('name'), item.val());
+            })
+            $('select').each(function(i) {
+                const item = $(this)
+                mydata[item.attr('name')] = item.val();
+                if ((item.val().toString().indexOf(',') > -1)) {
+                    item.val().toString().split(",").forEach(function(x) {
+                        data1.append(item.attr('name'), x);
+                    })
+                } else {
+                    data1.append(item.attr('name'), item.val());
+                }
+            })
+            data1.set('avatar', $('input[name=avatar]')[0].files[0]);
+            console.log(data1);
+
+            $("input").each(function(i){
+                        $(this).removeClass('is-invalid');
+                        $(this).parent().children('.invalid-feedback').remove();
+                    })
+            if (mydata['password'] != mydata['password1'] ){
+                $("input[name=password1]").addClass('is-invalid')
+                $("input[name=password1]").parent().append('<div cl         ass="invalid-feedback">Passwords do not match</div>')
+                return false;
+            }
+            console.log(mydata);
+            const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: 'btn btn-primary',
+              cancelButton: 'btn btn-outline-primary ml-2'
+            },
+            buttonsStyling: false
+          })
+            $.ajax({
+                url: "{% url 'user:user_add' %}",
+                type: "POST",
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: false,
+                data: data1,
+                success: function(data) {
+                    console.log(data);
+
+                    if (JSON.parse(data) == 'success') {
+                        console.log("success");
+                            swalWithBootstrapButtons.fire({
+                                title: 'Success!',
+                                icon: 'success',
+                                text: "successfully added the user",
+                                type: 'success',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                reverseButtons: true
+                            }).then((result) => {
+                                 $("input").each(function(i){$(this).val('')})
+                                console.log(result)
+                            })
+                        } else {
+                        const data_json = JSON.parse(data);
+                            for (const [key, value] of Object.entries(data_json)) {
+                                console.log(key, value);
+                                const this_input = $("input[name='" + key + "']")
+                                if (this_input === undefined) {
+                                    const this_input = $("select[name='" + key + "']")
+                                    this_input.addClass('is-invalid');
+                                    this_input.parent().append('<div class="invalid-feedback">' + value[0]["message"] + '</div>');
+                                } else {
+                                    this_input.addClass('is-invalid');
+                                    this_input.parent().append('<div class="invalid-feedback">' + value[0]["message"] + '</div>');
+                                }
+                            }
+
+                    }
+                }
+            });
+        })
+    </script>
 {% endblock %}
