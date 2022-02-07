@@ -237,7 +237,7 @@
                                  <td>
                                     <div>
                                         {% if announcement.description %}<a href="#" class="badge badge-primary" data-closest-elem="tr" data-toggle="description_modal" data-target="#description_modal"><i class="lar la-eye"></i><p style="display: none">{{ announcement.description }}</p> </a>{% endif %}
-                                        {% if announcement.created_by == request.user %}<a href="{% url 'posts:update' announcement.id %}" class="badge badge-success edit-note" data-toggle="modal" data-target="#edit-note"><i class="las la-pen mr-0"></i></a>{% endif %}
+{#                                        {% if announcement.created_by == request.user %}<a href="{% url 'posts:update' announcement.id %}" class="badge badge-success edit-note" data-toggle="modal" data-target="#edit-note"><i class="las la-pen mr-0"></i></a>{% endif %}#}
                                         {% if announcement.created_by == request.user %}<form style="display: none" action="{% url 'posts:delete' announcement.id %}" method="POST" id="announcement_{{ announcement.id }}">{% csrf_token %}</form><a href="#" announcement_id="{{ announcement.id }}"class="badge badge-danger" data-extra-toggle="delete_announcement" data-closest-elem="tr"><i class="las la-trash-alt mr-0"></i></a> {% endif %}
                                         {% if announcement.file %}<a href="{{ announcement.file.url }}" class="badge badge-info" download data-closest-elem="tr"><i class="las la-paperclip"></i></a>{% endif %}
                                     </div>
@@ -273,11 +273,32 @@
             type: 'POST',
             data: form.serialize(),
             success: function(data) {
+                const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: 'btn btn-primary',
+              cancelButton: 'btn btn-outline-primary ml-2'
+            },
+            buttonsStyling: false
+          })
                 try {
                     if (JSON.parse(data) === 'success') {
                         console.log("got success")
+
+                        swalWithBootstrapButtons.fire({
+                                title: 'Success!',
+                                icon: 'success',
+                                text: "successfully added the announcement",
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                reverseButtons: true
+                            }).then((result) => {
+                                location.reload();
+                                 $("input").each(function(i){$(this).val('')})
+                                console.log(result)
+                            })
                     } else {
                         form.innerHTML = data.toString();
+
                     }
                 } catch (e) {
                     form.html(data);
