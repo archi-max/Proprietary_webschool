@@ -48,25 +48,14 @@
                           <ul class="navbar-nav ml-auto navbar-list align-items-center">
                           <li class="caption-content">
                              <a href="#" class="iq-user-toggle d-flex align-items-center justify-content-between" id="h-dropdownMenuButton001" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  <img src="{% static 'assets/images/user/1.jpg' %}" class="img-fluid rounded avatar-50" alt="user">
+                                  <img src="{{ request.user.avatar.url }}" class="img-fluid rounded avatar-50" alt="user">
                               </a>
                               <div class="dropdown-menu dropdown-menu-right w-100 border-0 py-2" aria-labelledby="h-dropdownMenuButton001">
-                                  <a class="dropdown-item mb-2" href="{% static 'app/user-profile.html' %}">
+                                  <a class="dropdown-item mb-2" href="{% url 'user:profile' %}">
                                       <i class="lar la-user-circle font-size-20 mr-1"></i>
                                       <span class="mt-2">My Profile</span>
                                   </a>
-                                  <a class="dropdown-item mb-2" href="{% static 'app/user-profile-edit.html' %}">
-                                      <i class="las la-user-edit font-size-20 mr-1"></i>
-                                      <span>Edit Profile</span>
-                                  </a>
-                                  <a class="dropdown-item mb-2" href="{% static 'app/user-account-setting.html' %}">
-                                      <i class="las la-user-cog font-size-20 mr-1"></i>
-                                      <span>Account Settings</span>
-                                  </a>
-                                  <a class="dropdown-item" href="{% static 'app/user-privacy-setting.html' %}">
-                                      <i class="las la-user-shield font-size-20 mr-1"></i>
-                                      <span>Privacy Settings</span>
-                                  </a>
+
                                   <hr class="my-1">
                                   <a class="dropdown-item" href="{% static 'backend/index.html' %}">
                                       <i class="las la-sign-out-alt font-size-20 mr-1"></i>

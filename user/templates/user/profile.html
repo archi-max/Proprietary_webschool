@@ -35,22 +35,39 @@
                       </div>
                    </div>
                    <div class="card-body">
-                      <form action="#" enctype="multipart/form-data" method="post">
+                        <h3>
+                            {% if request.user.is_teacher %}Teacher{% else %}Student{% endif %}
+                        </h3> <br>
+                      <form action="{% url 'user:profile' %}" enctype="multipart/form-data" method="post">
                           {% csrf_token %}
                          <div class="form-group row align-items-center">
                             <div class="col-md-12">
                                <div class="profile-img-edit">
                                   <div class="crm-profile-img-edit">
-                                     <img class="crm-profile-pic avatar-100" src="../assets/images/user/1.jpg" alt="profile-pic">
+                                     <img class="crm-profile-pic avatar-100" src="{{ request.user.avatar.url }}" alt="profile-pic">
                                      <div class="crm-p-image bg-primary">
                                         <i class="las la-pen upload-button"></i>
-                                        <input class="file-upload" type="file" accept="image/*">
+                                        <input class="file-upload" id="avatar_edit" name="avatar" type="file" accept="image/*">
                                      </div>
                                   </div>
                                </div>
                             </div>
                          </div>
+                              <div class="form-group row">
+                                <label for="user_id_readonly" class="col-sm-2 col-form-label">{% if request.user.is_teacher %}Faculty Id:{% else %}Admission Number:{% endif %}</label>
+                                <div class="col-sm-10">
+                                  <input type="text" readonly class="form-control-plaintext" id="user_id_readonly" value="{{ request.user.user_id }}">
+                                </div>
+                              </div>
+{#                        <div class="row align-items-center">#}
+{#                            <div class="form-group row">#}
+{#                               <label for="uname">{% if request.user.is_teacher %}Faculty Id:{% else %}Admission Number:{% endif %}</label>#}
+{#                               <input type="text" readonly class="form-control-plaintext" value="{{ request.user.user_id }}">#}
+{#                                <div class="invalid-feedback"> {% if form.email.errors %}{{ form.email.errors }}{% endif %} </div>#}
+{#                            </div>#}
+{#                        </div>#}
                          <div class=" row align-items-center">
+
                             <div class="form-group col-sm-6">
                                <label for="fname">First Name:</label>
                                <input name="first_name" type="text" class="form-control {% if form.first_name.errors %}is-invalid{% endif %}" id="fname" value="{{ form.first_name.value }}" style="cursor: auto;">
@@ -62,10 +79,11 @@
                                 <div class="invalid-feedback"> {% if form.last_name.errors %}{{ form.last_name.errors }}{% endif %} </div>
                             </div>
                             <div class="form-group col-sm-6">
-                               <label for="uname">User Name:</label>
+                               <label for="uname">Email:</label>
                                <input name="email" type="email" class="form-control {% if form.email.errors %}is-invalid{% endif %}" id="uname" value="{{ form.email.value }}">
                                 <div class="invalid-feedback"> {% if form.email.errors %}{{ form.email.errors }}{% endif %} </div>
                             </div>
+
 
 
                          </div>
@@ -87,7 +105,6 @@
                           {% csrf_token %}
                          <div class="form-group">
                             <label for="cpass">Current Password:</label>
-                            <a href="javascripe:void();" class="float-right">Forgot Password</a>
                             <input type="Password" name="old_password" class="form-control" id="cpass" value="" >
                              <div class="invalid-feedback"></div>
                          </div>
@@ -165,6 +182,5 @@
             });
             return false;
         });
-
     </script>
 {% endblock %}
