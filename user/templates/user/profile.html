@@ -66,8 +66,8 @@
 
 
                          </div>
-                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                         <button type="reset" class="btn iq-bg-danger">Cancel</button>
+                         <button type="submit" class="btn btn-primary mr-2">Change</button>
+
                       </form>
                    </div>
                 </div>
@@ -80,22 +80,22 @@
                       </div>
                    </div>
                    <div class="card-body">
-                      <form action="{% url 'user:changepassword' %}" method="post" enctype="multipart/form-data">
+                      <form id="passwordchange" action="{% url 'user:changepassword' %}" method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
                          <div class="form-group">
                             <label for="cpass">Current Password:</label>
                             <a href="javascripe:void();" class="float-right">Forgot Password</a>
-                            <input type="Password" class="form-control" id="cpass" value="" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACIUlEQVQ4EX2TOYhTURSG87IMihDsjGghBhFBmHFDHLWwSqcikk4RRKJgk0KL7C8bMpWpZtIqNkEUl1ZCgs0wOo0SxiLMDApWlgOPrH7/5b2QkYwX7jvn/uc//zl3edZ4PPbNGvF4fC4ajR5VrNvt/mo0Gr1ZPOtfgWw2e9Lv9+chX7cs64CS4Oxg3o9GI7tUKv0Q5o1dAiTfCgQCLwnOkfQOu+oSLyJ2A783HA7vIPLGxX0TgVwud4HKn0nc7Pf7N6vV6oZHkkX8FPG3uMfgXC0Wi2vCg/poUKGGcagQI3k7k8mcp5slcGswGDwpl8tfwGJg3xB6Dvey8vz6oH4C3iXcFYjbwiDeo1KafafkC3NjK7iL5ESFGQEUF7Sg+ifZdDp9GnMF/KGmfBdT2HCwZ7TwtrBPC7rQaav6Iv48rqZwg+F+p8hOMBj0IbxfMdMBrW5pAVGV/ztINByENkU0t5BIJEKRSOQ3Aj+Z57iFs1R5NK3EQS6HQqF1zmQdzpFWq3W42WwOTAf1er1PF2USFlC+qxMvFAr3HcexWX+QX6lUvsKpkTyPSEXJkw6MQ4S38Ljdbi8rmM/nY+CvgNcQqdH6U/xrYK9t244jZv6ByUOSiDdIfgBZ12U6dHEHu9TpdIr8F0OP692CtzaW/a6y3y0Wx5kbFHvGuXzkgf0xhKnPzA4UTyaTB8Ph8AvcHi3fnsrZ7Wore02YViqVOrRXXPhfqP8j6MYlawoAAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
+                            <input type="Password" name="old_password" class="form-control" id="cpass" value="" >
                          </div>
                          <div class="form-group">
                             <label for="npass">New Password:</label>
-                            <input type="Password" class="form-control" id="npass" value="" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACIUlEQVQ4EX2TOYhTURSG87IMihDsjGghBhFBmHFDHLWwSqcikk4RRKJgk0KL7C8bMpWpZtIqNkEUl1ZCgs0wOo0SxiLMDApWlgOPrH7/5b2QkYwX7jvn/uc//zl3edZ4PPbNGvF4fC4ajR5VrNvt/mo0Gr1ZPOtfgWw2e9Lv9+chX7cs64CS4Oxg3o9GI7tUKv0Q5o1dAiTfCgQCLwnOkfQOu+oSLyJ2A783HA7vIPLGxX0TgVwud4HKn0nc7Pf7N6vV6oZHkkX8FPG3uMfgXC0Wi2vCg/poUKGGcagQI3k7k8mcp5slcGswGDwpl8tfwGJg3xB6Dvey8vz6oH4C3iXcFYjbwiDeo1KafafkC3NjK7iL5ESFGQEUF7Sg+ifZdDp9GnMF/KGmfBdT2HCwZ7TwtrBPC7rQaav6Iv48rqZwg+F+p8hOMBj0IbxfMdMBrW5pAVGV/ztINByENkU0t5BIJEKRSOQ3Aj+Z57iFs1R5NK3EQS6HQqF1zmQdzpFWq3W42WwOTAf1er1PF2USFlC+qxMvFAr3HcexWX+QX6lUvsKpkTyPSEXJkw6MQ4S38Ljdbi8rmM/nY+CvgNcQqdH6U/xrYK9t244jZv6ByUOSiDdIfgBZ12U6dHEHu9TpdIr8F0OP692CtzaW/a6y3y0Wx5kbFHvGuXzkgf0xhKnPzA4UTyaTB8Ph8AvcHi3fnsrZ7Wore02YViqVOrRXXPhfqP8j6MYlawoAAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
+                            <input type="Password" name="new_password1" class="form-control" id="npass" value="">
                          </div>
                          <div class="form-group">
                             <label for="vpass">Verify Password:</label>
-                            <input type="Password" class="form-control" id="vpass" value="" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACIUlEQVQ4EX2TOYhTURSG87IMihDsjGghBhFBmHFDHLWwSqcikk4RRKJgk0KL7C8bMpWpZtIqNkEUl1ZCgs0wOo0SxiLMDApWlgOPrH7/5b2QkYwX7jvn/uc//zl3edZ4PPbNGvF4fC4ajR5VrNvt/mo0Gr1ZPOtfgWw2e9Lv9+chX7cs64CS4Oxg3o9GI7tUKv0Q5o1dAiTfCgQCLwnOkfQOu+oSLyJ2A783HA7vIPLGxX0TgVwud4HKn0nc7Pf7N6vV6oZHkkX8FPG3uMfgXC0Wi2vCg/poUKGGcagQI3k7k8mcp5slcGswGDwpl8tfwGJg3xB6Dvey8vz6oH4C3iXcFYjbwiDeo1KafafkC3NjK7iL5ESFGQEUF7Sg+ifZdDp9GnMF/KGmfBdT2HCwZ7TwtrBPC7rQaav6Iv48rqZwg+F+p8hOMBj0IbxfMdMBrW5pAVGV/ztINByENkU0t5BIJEKRSOQ3Aj+Z57iFs1R5NK3EQS6HQqF1zmQdzpFWq3W42WwOTAf1er1PF2USFlC+qxMvFAr3HcexWX+QX6lUvsKpkTyPSEXJkw6MQ4S38Ljdbi8rmM/nY+CvgNcQqdH6U/xrYK9t244jZv6ByUOSiDdIfgBZ12U6dHEHu9TpdIr8F0OP692CtzaW/a6y3y0Wx5kbFHvGuXzkgf0xhKnPzA4UTyaTB8Ph8AvcHi3fnsrZ7Wore02YViqVOrRXXPhfqP8j6MYlawoAAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
+                            <input type="Password" name="new_password2" class="form-control" id="vpass" value="" >
                          </div>
-                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                         <button type="reset" class="btn iq-bg-danger">Cancel</button>
+                         <button type="submit" class="btn btn-primary mr-2">Change</button>
                       </form>
                    </div>
                 </div>
@@ -110,6 +110,67 @@
 {% endblock %}
 {% block custom_js %}
     <script>
+        $('#passwordchange').on('submit', function (){
+            var form = $(this);
+            var url = form.attr('action');
+            const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: 'btn btn-primary',
+              cancelButton: 'btn btn-outline-primary ml-2'
+            },
+            buttonsStyling: false
+          })
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(),
+                success: function (data) {
+                    if (data.success) {
+                        $('#passwordchange').reset();
+                        swalWithBootstrapButtons.fire({
+                                title: 'Changed!',
+                                text: "Your password has been changed.",
+                                icon: 'success',
+                                showClass: {
+                                    popup: 'animate__animated animate__zoomIn'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__zoomOut'
+                                }
+                            }
+                          ).then(() => {
+
+                              if (closestElem == '.card') {
+                                $(this).closest(closestElem).parent().remove()
+                              } else {
+                                $(this).closest(closestElem).remove()
+                              }
+                          })
+                    } else {
+                        swalWithBootstrapButtons.fire({
+                                title: 'Error!',
+                                text: "Your password could not be changed. Please check your fields again",
+                                icon: 'error',
+                                showClass: {
+                                    popup: 'animate__animated animate__zoomIn'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__zoomOut'
+                                }
+                            }
+                          ).then(() => {
+
+                              if (closestElem == '.card') {
+                                $(this).closest(closestElem).parent().remove()
+                              } else {
+                                $(this).closest(closestElem).remove()
+                              }
+                          })
+                    }
+                }
+            });
+            return false;
+        });
 
     </script>
 {% endblock %}
