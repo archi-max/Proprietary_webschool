@@ -29,7 +29,7 @@ class UserManager(BaseUserManager):
     def create_superuser(self, *args, **kwargs):
         """Creates Superuser"""
 
-        del kwargs['id'] # remove id from kwargs as it is a required field because its username but its auto
+        if kwargs.get('id'): del kwargs['id'] # remove id from kwargs as it is a required field because its username but its auto
         kwargs['is_admin'] = True
         user = self.create_user(*args, **kwargs)
         user.is_superuser = True
