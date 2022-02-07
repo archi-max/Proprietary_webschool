@@ -268,7 +268,26 @@
     });
     $('#newPostButton').on('click',function() {
         const form = $('#newPostForm');
-        form.trigger('submit');
+        $.ajax({
+            url: form.attr('action'),
+            type: 'POST',
+            data: form.serialize(),
+            success: function(data) {
+                try {
+                    if (JSON.parse(data) === 'success') {
+                        console.log("got success")
+                    } else {
+                        form.innerHTML = data.toString();
+                    }
+                } catch (e) {
+                    form.html(data);
+                    console.log(data.toString())
+                }
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
     });
     $('#filterAnnouncements').on('keyup',function() {
         {#alert("hi");#}

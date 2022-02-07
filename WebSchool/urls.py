@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.views.generic.base import RedirectView
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,6 +26,7 @@ urlpatterns = [
     path('homework/',include('homework.urls')),
     path('notes/',include('notes.urls')),
     path('classes/',include('classes.urls')),
+    path('formsuccess/',TemplateView.as_view(template_name='backend/form_success.html'), name="formsuccess"),
     path('',include('user.urls')),
     path('',RedirectView.as_view(url='/posts/'), name='index'),
 

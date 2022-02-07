@@ -3,7 +3,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import FormView, UpdateView, DeleteView
 from .models import Post
 from .forms import PostForm
-
+from django.urls import reverse
 
 # Create your views here.
 
@@ -21,9 +21,9 @@ class PostListView(ListView):
 
 
 class PostFormView(FormView):
-    template_name = 'posts/create.html'
+    template_name = 'backend/form_page.html'
     form_class = PostForm
-    success_url = '/posts/'
+    success_url = "/formsuccess/"
 
     def form_valid(self, form):
         post = form.save(user=self.request.user, commit=True)

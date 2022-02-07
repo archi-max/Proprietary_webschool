@@ -2,6 +2,7 @@ from django.contrib.auth import  get_user_model
 from django.http import HttpResponse
 from django.views.generic.edit import UpdateView
 import csv
+from django.contrib.auth import views as auth_views
 from django.urls import reverse
 
 User = get_user_model()
@@ -27,3 +28,8 @@ class UserUpdateView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class UserLogoutView(auth_views.LogoutView):
+    model = User
+    success_url = "/login"

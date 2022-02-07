@@ -53,21 +53,24 @@
                          <div class=" row align-items-center">
                             <div class="form-group col-sm-6">
                                <label for="fname">First Name:</label>
-                               <input name="first_name" type="text" class="form-control" id="fname" value="{{ form.first_name.value }}" style="cursor: auto;">
+                               <input name="first_name" type="text" class="form-control {% if form.first_name.errors %}is-invalid{% endif %}" id="fname" value="{{ form.first_name.value }}" style="cursor: auto;">
+                                <div class="invalid-feedback"> {% if form.first_name.errors %}{{ form.first_name.errors }}{% endif %} </div>
                             </div>
                             <div class="form-group col-sm-6">
                                <label for="lname">Last Name:</label>
-                               <input name="last_name" type="text" class="form-control" id="lname" value="{{ form.last_name.value }}">
+                               <input name="last_name" type="text" class="form-control {% if form.last_name.errors %}is-invalid{% endif %}" id="lname" value="{{ form.last_name.value }}">
+                                <div class="invalid-feedback"> {% if form.last_name.errors %}{{ form.last_name.errors }}{% endif %} </div>
                             </div>
                             <div class="form-group col-sm-6">
                                <label for="uname">User Name:</label>
-                               <input name="email" type="email" class="form-control" id="uname" value="{{ form.email.value }}">
+                               <input name="email" type="email" class="form-control {% if form.email.errors %}is-invalid{% endif %}" id="uname" value="{{ form.email.value }}">
+                                <div class="invalid-feedback"> {% if form.email.errors %}{{ form.email.errors }}{% endif %} </div>
                             </div>
 
 
                          </div>
-                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                         <button type="reset" class="btn iq-bg-danger">Cancel</button>
+                         <button type="submit" class="btn btn-primary mr-2">Change</button>
+
                       </form>
                    </div>
                 </div>
@@ -80,22 +83,25 @@
                       </div>
                    </div>
                    <div class="card-body">
-                      <form action="{% url 'user:changepassword' %}" method="post" enctype="multipart/form-data">
+                      <form id="passwordchange" action="{% url 'user:changepassword' %}" method="post" enctype="multipart/form-data">
+                          {% csrf_token %}
                          <div class="form-group">
                             <label for="cpass">Current Password:</label>
                             <a href="javascripe:void();" class="float-right">Forgot Password</a>
-                            <input type="Password" class="form-control" id="cpass" value="" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACIUlEQVQ4EX2TOYhTURSG87IMihDsjGghBhFBmHFDHLWwSqcikk4RRKJgk0KL7C8bMpWpZtIqNkEUl1ZCgs0wOo0SxiLMDApWlgOPrH7/5b2QkYwX7jvn/uc//zl3edZ4PPbNGvF4fC4ajR5VrNvt/mo0Gr1ZPOtfgWw2e9Lv9+chX7cs64CS4Oxg3o9GI7tUKv0Q5o1dAiTfCgQCLwnOkfQOu+oSLyJ2A783HA7vIPLGxX0TgVwud4HKn0nc7Pf7N6vV6oZHkkX8FPG3uMfgXC0Wi2vCg/poUKGGcagQI3k7k8mcp5slcGswGDwpl8tfwGJg3xB6Dvey8vz6oH4C3iXcFYjbwiDeo1KafafkC3NjK7iL5ESFGQEUF7Sg+ifZdDp9GnMF/KGmfBdT2HCwZ7TwtrBPC7rQaav6Iv48rqZwg+F+p8hOMBj0IbxfMdMBrW5pAVGV/ztINByENkU0t5BIJEKRSOQ3Aj+Z57iFs1R5NK3EQS6HQqF1zmQdzpFWq3W42WwOTAf1er1PF2USFlC+qxMvFAr3HcexWX+QX6lUvsKpkTyPSEXJkw6MQ4S38Ljdbi8rmM/nY+CvgNcQqdH6U/xrYK9t244jZv6ByUOSiDdIfgBZ12U6dHEHu9TpdIr8F0OP692CtzaW/a6y3y0Wx5kbFHvGuXzkgf0xhKnPzA4UTyaTB8Ph8AvcHi3fnsrZ7Wore02YViqVOrRXXPhfqP8j6MYlawoAAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
+                            <input type="Password" name="old_password" class="form-control" id="cpass" value="" >
+                             <div class="invalid-feedback"></div>
                          </div>
                          <div class="form-group">
                             <label for="npass">New Password:</label>
-                            <input type="Password" class="form-control" id="npass" value="" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACIUlEQVQ4EX2TOYhTURSG87IMihDsjGghBhFBmHFDHLWwSqcikk4RRKJgk0KL7C8bMpWpZtIqNkEUl1ZCgs0wOo0SxiLMDApWlgOPrH7/5b2QkYwX7jvn/uc//zl3edZ4PPbNGvF4fC4ajR5VrNvt/mo0Gr1ZPOtfgWw2e9Lv9+chX7cs64CS4Oxg3o9GI7tUKv0Q5o1dAiTfCgQCLwnOkfQOu+oSLyJ2A783HA7vIPLGxX0TgVwud4HKn0nc7Pf7N6vV6oZHkkX8FPG3uMfgXC0Wi2vCg/poUKGGcagQI3k7k8mcp5slcGswGDwpl8tfwGJg3xB6Dvey8vz6oH4C3iXcFYjbwiDeo1KafafkC3NjK7iL5ESFGQEUF7Sg+ifZdDp9GnMF/KGmfBdT2HCwZ7TwtrBPC7rQaav6Iv48rqZwg+F+p8hOMBj0IbxfMdMBrW5pAVGV/ztINByENkU0t5BIJEKRSOQ3Aj+Z57iFs1R5NK3EQS6HQqF1zmQdzpFWq3W42WwOTAf1er1PF2USFlC+qxMvFAr3HcexWX+QX6lUvsKpkTyPSEXJkw6MQ4S38Ljdbi8rmM/nY+CvgNcQqdH6U/xrYK9t244jZv6ByUOSiDdIfgBZ12U6dHEHu9TpdIr8F0OP692CtzaW/a6y3y0Wx5kbFHvGuXzkgf0xhKnPzA4UTyaTB8Ph8AvcHi3fnsrZ7Wore02YViqVOrRXXPhfqP8j6MYlawoAAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
+                            <input type="Password" name="new_password1" class="form-control" id="npass" value="">
+                             <div class="invalid-feedback"></div>
                          </div>
                          <div class="form-group">
                             <label for="vpass">Verify Password:</label>
-                            <input type="Password" class="form-control" id="vpass" value="" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACIUlEQVQ4EX2TOYhTURSG87IMihDsjGghBhFBmHFDHLWwSqcikk4RRKJgk0KL7C8bMpWpZtIqNkEUl1ZCgs0wOo0SxiLMDApWlgOPrH7/5b2QkYwX7jvn/uc//zl3edZ4PPbNGvF4fC4ajR5VrNvt/mo0Gr1ZPOtfgWw2e9Lv9+chX7cs64CS4Oxg3o9GI7tUKv0Q5o1dAiTfCgQCLwnOkfQOu+oSLyJ2A783HA7vIPLGxX0TgVwud4HKn0nc7Pf7N6vV6oZHkkX8FPG3uMfgXC0Wi2vCg/poUKGGcagQI3k7k8mcp5slcGswGDwpl8tfwGJg3xB6Dvey8vz6oH4C3iXcFYjbwiDeo1KafafkC3NjK7iL5ESFGQEUF7Sg+ifZdDp9GnMF/KGmfBdT2HCwZ7TwtrBPC7rQaav6Iv48rqZwg+F+p8hOMBj0IbxfMdMBrW5pAVGV/ztINByENkU0t5BIJEKRSOQ3Aj+Z57iFs1R5NK3EQS6HQqF1zmQdzpFWq3W42WwOTAf1er1PF2USFlC+qxMvFAr3HcexWX+QX6lUvsKpkTyPSEXJkw6MQ4S38Ljdbi8rmM/nY+CvgNcQqdH6U/xrYK9t244jZv6ByUOSiDdIfgBZ12U6dHEHu9TpdIr8F0OP692CtzaW/a6y3y0Wx5kbFHvGuXzkgf0xhKnPzA4UTyaTB8Ph8AvcHi3fnsrZ7Wore02YViqVOrRXXPhfqP8j6MYlawoAAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;">
+                            <input type="Password" name="new_password2" class="form-control" id="vpass" value="" >
+                             <div class="invalid-feedback"></div>
                          </div>
-                         <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                         <button type="reset" class="btn iq-bg-danger">Cancel</button>
+                         <button type="submit" class="btn btn-primary mr-2">Change</button>
                       </form>
                    </div>
                 </div>
@@ -110,6 +116,55 @@
 {% endblock %}
 {% block custom_js %}
     <script>
+        $('#passwordchange').on('submit', function (){
+            const form = $(this);
+            var url = form.attr('action');
+            const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: 'btn btn-primary',
+              cancelButton: 'btn btn-outline-primary ml-2'
+            },
+            buttonsStyling: false
+          })
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(),
+                success: function (data) {
+                    form.find('.is-invalid').removeClass('is-invalid');
+                    try {
+                        if (JSON.parse(data) == 'success') {
+                            swalWithBootstrapButtons.fire({
+                                title: 'Success!',
+                                icon: 'success',
+                                text: "successfully changed the password",
+                                type: 'success',
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                reverseButtons: true
+                            }).then((result) => {
+                                form.reset();
+
+                            })
+                        } else {
+                            const data_json = JSON.parse(data);
+                            for (const [key, value] of Object.entries(data_json)) {
+                                console.log(key, value);
+                                  const fields = form.find("[name=" + key + "]");
+                                  console.log(fields)
+                                  fields.addClass('is-invalid');
+                                  fields.parent().find('.invalid-feedback').text(value[0]["message"]);
+                                }
+                        }
+                    } catch (e) {
+                        console.log(data)
+                    }
+
+
+                }
+            });
+            return false;
+        });
 
     </script>
 {% endblock %}
