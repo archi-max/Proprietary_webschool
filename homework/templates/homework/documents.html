@@ -1,6 +1,7 @@
 {% extends 'backend/base.html' %}
 
 {% block content %}
+    {# MODALS #}
     <div class="modal fade" id="new-submission-modal" tabindex="-1" role="dialog" aria-labelledby="uploadModal" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -29,6 +30,30 @@
   </div>
 </div>
 
+    <div class="modal fade" id="work_create_modal" tabindex="-1" role="dialog" aria-labelledby="createWorkModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create Announcement</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="newWorkForm" action="{% url 'homework:work_create' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ create_form }}
+        </form>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="newWorkButton">Save</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+    {# MODALS-END #}
 <div class="container-fluid">
 <div class="desktop-header">
             <div class="card card-block topnav-left">
@@ -37,7 +62,7 @@
                            <h4>Homework</h4>
                            <div class="media flex-wrap align-items-center">
                               <div class="form-group mb-0"> <input type="search" class="form-control" id="homeworkSearch" placeholder="Search"></div>
-                              {% if request.user.is_teacher %}<a href="#" class="btn btn-primary add-btn" data-toggle="ann_create_modal" data-target="ann_create_modal"><i class="las la-plus pr-2"></i>New Homework</a>{% endif %}
+                              {% if request.user.is_teacher %}<a href="#" class="btn btn-primary add-btn" data-toggle="work_create_modal" data-target="work_create_modal"><i class="las la-plus pr-2"></i>New Homework</a>{% endif %}
                            </div>
                      </div>
                   </div>
@@ -50,7 +75,8 @@
                 <div class="card-body">
                     <div class="row">
                     {% for submission_file, homework in homeworks %}
-                        <div class="col-lg-4 col-md-6">
+
+                        <div class="col-lg-4 col-md-6" homework-data-id="{{ homework.id }}">
                             <div class="card card-block card-stretch card-height card-bottom-border-info">
                                 <div class="card-header d-flex justify-content-between pb-1">
                                     <div class="icon iq-icon-box-2 icon-border-danger rounded">
@@ -64,9 +90,9 @@
                                                 <i class="ri-more-fill"></i>
                                             </span>
                                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="note-dropdownMenuButton4" style="">
-                                                {% if request.user.is_teacher %}
+                                                {% if homework.created_by ==  request.user %}
                                                 <a href="#" class="dropdown-item new-note1" data-toggle="modal" data-target="#new-note1"><i class="las la-eye mr-3"></i>View Submissions</a>
-                                                <a class="dropdown-item" data-extra-toggle="delete" data-closest-elem=".card" href="#"><i class="las la-trash-alt mr-3"></i>Delete</a>
+                                                <a class="dropdown-item" data-extra-toggle="delete_homework" data-closest-elem=".data-card-work" href="#"><i class="las la-trash-alt mr-3"></i>Delete<form method="post" action="{% url 'homework:work_delete' homework.id %}" style="display: none">{% csrf_token %}</form></a>
                                                 {% else %}
                                                 <a href="#" class="dropdown-item new-submission-button" work-id="{{ homework.id }}"><i class="las la-file-upload"></i> Upload</a>
                                                 {% endif %}
@@ -82,7 +108,7 @@
                                     <div class="d-flex align-items-center justify-content-between note-text note-text-info">
 {#                                        <a href="#" class=""><i class="las la-user-friends mr-2 font-size-20"></i>03 share</a>#}
                                         {% if submission_file %}<a href="{{ submission_file.url }}" class=""><i class="las la-download mr-2 font-size-20"></i>My Submission</a>{% endif %}
-                                        <a href="#" class=""><i class="las la-calendar mr-2 font-size-20"></i>{{ homework.updated_at|date:"n M Y" }}</a>
+                                        <a href="#" class=""><i class="las la-calendar mr-2 font-size-20"></i>{{ homework.upload_by|date:"j M Y" }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -106,23 +132,99 @@
             $("#new-submission-modal").find("form").attr("action", url_mask);
             $("#new-submission-modal").modal("show");
         });
+        $('[data-toggle=work_create_modal]').on('click',function(){
+        $('#work_create_modal').modal('show');
+    });
         $("#submissionUploadButton").click(function(e){
             const form = $("#submissionUploadForm");
+            const myformdata = new FormData(document.getElementById("submissionUploadForm"));
             $.ajax({
                 url: form.attr("action"),
                 type: "POST",
-                data: form.serialize(),
+                processData: false,
+                contentType: false,
+                enctype: "multipart/form-data",
+                data: myformdata,
                 success: function(data){
-                    {#$("#new-submission-modal").modal("hide");#}
                     $("#new-submission-modal").find("form").trigger("reset");
-                    console.log(data);
+                    if ((JSON.parse(data))=="success") {
+                        location.reload();
+                    } else {
+                        const myerrs = JSON.parse(data);
+                        $("#upload-file").parent().find(".invalid-feedback").text(myerrs.file.message);
+
+                    }
                 },
                 error: function(data){
                     console.log(data);
                 }
             });
-            {#e.preventDefault();#}
-
         });
+
+        $('#newWorkButton').on('click',function() {
+        const form = $('#newWorkForm');
+        $.ajax({
+            url: form.attr('action'),
+            type: 'POST',
+            data: form.serialize(),
+            success: function(data) {
+                const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: 'btn btn-primary',
+              cancelButton: 'btn btn-outline-primary ml-2'
+            },
+            buttonsStyling: false
+          })
+                try {
+                    if (JSON.parse(data) === 'success') {
+                        console.log("got success")
+
+                        swalWithBootstrapButtons.fire({
+                                title: 'Success!',
+                                icon: 'success',
+                                text: "successfully added the homework",
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                reverseButtons: true
+                            }).then((result) => {
+                                location.reload();
+                                 $(this).find("input").each(function(i){$(this).val('')})
+                                console.log(result)
+                            })
+                    } else {
+                        form.innerHTML = data.toString();
+
+                    }
+                } catch (e) {
+                    form.html(data);
+                    console.log(data.toString())
+                }
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
+    });
+
+        $('#homeworkSearch').on('keyup',function() {
+        {#alert("hi");#}
+
+        const selection = $(this).val();
+        console.log("val: "+selection);
+        const dataset = $('.col-lg-4, .col-md-6');
+        dataset.css("display","")
+        dataset.filter(function(index, item){
+            if ($(item).find(".card-title").text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
+                return false;
+            } if ($(item).find('.card-description').text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
+                return false;
+            } if ($(item).find('.card-footer').text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
+                return false;
+            }  else {
+                return true;
+            }
+            ;
+}).css("display", "none");
+    });
     </script>
 {% endblock %}

@@ -44,3 +44,6 @@ class Submission(FileBaseResponse):
 
     def __str__(self):
         return self.student.get_full_name() + " - " + self.work.title
+
+    class Meta:
+        unique_together = ('work', 'student')

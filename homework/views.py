@@ -1,5 +1,5 @@
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, FormView, DeleteView
 from .models import Work, Submission
 from .forms import SubmissionForm, WorkForm
 # Create your views here.
@@ -18,26 +18,28 @@ def get_submission_file(work, user):
 def submission_file(work, user):
     return get_submission_file(work, user)
 
-class SubmissionCreateView(CreateView):
+class SubmissionFormView(FormView):
     model = Submission
-    form = SubmissionForm
+    form_class = SubmissionForm
     fields = ['file']
-    template_name = 'homework/form.html'
-    success_url = '/homework/'
+    template_name = 'backend/form_error.html'
+    success_url = '/formsuccess/'
 
     def form_valid(self, form):
-        submission = form.save(commit=False)
-        submission.student, submission.work = self.request.user, Work.objects.get(id=self.kwargs["pk"])
-        submission.save()
+        # submission = form.save(commit=False)
+        # submission.student, submission.work = /self.request.user, Work.objects.get(id=self.kwargs["pk"])
+        # submission.save()
+        sub, _ = Submission.objects.get_or_create(student_id=self.request.user.id, work_id=self.kwargs["pk"])
+        sub.file = form.cleaned_data['file']
+        sub.save()
         return super().form_valid(form)
 
 
-class WorkCreateView(CreateView):
+class WorkFormView(FormView):
     model = Work
-    form = WorkForm
-    fields = ['title', 'description',  'upload_by', 'groups', 'work_type']
-    template_name = 'homework/form.html'
-    success_url = '/homework/'
+    form_class = WorkForm
+    template_name = 'backend/form_page.html'
+    success_url = '/formsuccess/'
 
     def form_valid(self, form):
         work = form.save(commit=False)
@@ -62,6 +64,7 @@ class WorkListView(ListView):
             dat.append((sf, hw))
         print(dat)
         context['homeworks'] = dat
+        context['create_form'] = WorkForm()
         # context['submission_form'] = SubmissionForm()
         # context['submission_file'] = lambda x: get_submission_file(x, self.request.user)
         return context
@@ -95,4 +98,8 @@ class SubmissionUpdateView(UpdateView):
     template_name = 'homework/form.html'
     success_url = '/homework/'
 
+class WorkDeleteView(DeleteView):
+    model = Work
+    template_name = 'homework/documents.html'
+    success_url = '/homework/'
 

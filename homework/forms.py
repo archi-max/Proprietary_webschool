@@ -1,6 +1,7 @@
 from django import forms
 from .models import Work, Submission
 import datetime
+from django.utils import timezone
 
 class SubmissionForm(forms.ModelForm):
     class Meta:
@@ -22,13 +23,16 @@ class SubmissionForm(forms.ModelForm):
 
 
 class WorkForm(forms.ModelForm):
+
+    template_name = 'homework/forms/work_form_snippet.html'
+
     class Meta:
         model = Work
         fields = ['title', 'description', 'upload_by', 'groups', 'work_type']
 
     def clean_upload_by(self):
         date = self.cleaned_data['upload_by']
-        if date < datetime.datetime.now():
+        if date < timezone.now():
             raise forms.ValidationError("Date cannot be in the past")
 
         return date
