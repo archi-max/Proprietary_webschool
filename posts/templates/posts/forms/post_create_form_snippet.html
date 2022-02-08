@@ -27,12 +27,12 @@
 <div class="form-row">
     <div class="form-group col-md-6">
         <label for="id_tags">Tags</label>
-        <select name="tags" id="id_tags" class="form-control {%  if form.file.errors %} is-invalid{% endif %}">
+        <select name="tags" id="id_tags" class="form-control {%  if form.tags.errors %} is-invalid{% endif %}">
             {% for x, y in form.fields.tags.choices %}
                 <option value="{{ x }}"{% if form.fields.tags.value == x %} selected{% endif %}>{{ y }}</option>
             {% endfor %}
         </select>
-    {%  if form.groups.errors %}<div class="invalid-feedback">{{ form.groups.errors }}</div> {% endif %}
+    {%  if form.tags.errors %}<div class="invalid-feedback">{{ form.tags.errors }}</div> {% endif %}
     </div>
 </div>
 
