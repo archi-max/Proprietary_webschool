@@ -56,7 +56,7 @@
             <div class="card card-block topnav-left">
                 <div class="card-body write-card">
                      <div class="d-flex flex-wrap align-items-center justify-content-between">
-                           <h4>Announcements</h4>
+                           <h4>Home</h4>
                            <div class="media flex-wrap align-items-center">
                               <div class="iq-search-bar card-search mr-3 position-relative">
                                  <a href="#" class="search-toggle rounded" id="dropdownSearch" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -71,7 +71,7 @@
 {#                                       </form>#}
                                  </div>
                               </div>
-                              {% if request.user.is_teacher %}<a href="#" class="btn btn-primary add-btn" data-toggle="ann_create_modal" data-target="ann_create_modal"><i class="las la-plus pr-2"></i>New Announcement</a>{% endif %}
+                              {% if request.user.is_teacher %}<a href="#" class="btn btn-primary add-btn" data-toggle="ann_create_modal" data-target="ann_create_modal"><i class="las la-plus pr-2"></i>New Post</a>{% endif %}
                            </div>
                      </div>
                   </div>
@@ -216,6 +216,19 @@
             <div class="col-lg-12">
                <div class="card card-block card-stretch card-height note-table">
                   <div class="card-body custom-notes-space">
+                  <ul class="nav nav-tabs" id="postsTagsTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" data-tags="{{ announcements.0.ANNOUNCEMENT }}" id="announcement-tab" data-toggle="tab" href="#announcements" role="tab" aria-controls="home" aria-selected="true">Announcements</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-tags="{{ announcements.0.RESULT }}" id="result-tab" data-toggle="tab" href="#results" role="tab" aria-controls="profile" aria-selected="false">Results</a>
+  </li>
+</ul>
+{#<div class="tab-content" id="myTabContent">#}
+{#  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">...</div>#}
+{#  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>#}
+{#  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>#}
+{#</div>#}
                      <div class="table-responsive">
                         <table id="announcements_table" class="table tree mb-0 tbl-server-info">
                            <thead  class="bg-white text-uppercase">
@@ -233,6 +246,7 @@
                                  <td data-column="name"><span class="treegrid-indent" style="width:15px"></span>{{ announcement.title }} </td>
                                  <td>{{ announcement.created_by.get_full_name }}</td>
                                  <td>{{ announcement.updated_at|date:"jS b Y" }}</td>
+
                                  {#<td><i class="las la-lock mr-3 font-size-20"></i>Only You</td>#}
                                  <td>
                                     <div>
@@ -242,6 +256,7 @@
                                         {% if announcement.file %}<a href="{{ announcement.file.url }}" class="badge badge-info" download data-closest-elem="tr"><i class="las la-paperclip"></i></a>{% endif %}
                                     </div>
                                  </td>
+                              <td posts-tags style="display: none">{{ announcement.tags }}</td>
                               </tr>
                             {% endfor %}
 
@@ -334,6 +349,22 @@
 }).hide();
     });
 
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        console.log("hiok")
+        const dataset = $('#announcements_table tbody').find('tr');
+        dataset.show()
+        console.log(e.target)
+        dataset.filter(function (index, item){
+            console.log("filter 1" + $(item).find("div[posts-tags]").text())
+            console.log("filter 2" + e.target.getAttribute('data-tags'))
+            if ($(item).find("td[posts-tags]").text()==e.target.getAttribute('data-tags')) {
+                return false;
+            } else {
+                return true;
+            }
+        }).hide()
+   // newly activated tab
+})
     {#   $.ajax({#}
     {#       url: form.attr('action'),#}
     {#       type: form.attr('method'),#}
