@@ -56,7 +56,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         max_length=255,
         unique=True,
     )
-    avatar = models.ImageField(upload_to=avatar_filename_generator, default='default/images/default_avatar.jpg')
+    avatar = models.ImageField(upload_to=avatar_filename_generator, default='default/images/default_avatar.png')
     id = models.AutoField(primary_key=True)
     user_id = models.CharField(max_length=10, unique=True, null=False, blank=False, editable=False)
     first_name = models.CharField(max_length=50)
