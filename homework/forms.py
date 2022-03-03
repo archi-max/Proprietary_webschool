@@ -37,8 +37,6 @@ class WorkForm(forms.ModelForm):
 
         return date
 
-    def save(self, commit=True):
-        instance = super(WorkForm, self).save(commit=False)
-        if commit:
-            instance.save()
-        return instance
+    # def save(self, commit=True):
+    #     instance = super(WorkForm, self).save(commit=commit)
+    #     return instance

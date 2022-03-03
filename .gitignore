@@ -6,7 +6,7 @@
 /UploadedFiles/*
 !/UploadedFiles/default
 __pycache__/
-
+/__pycache__/
 *.py[cod]
 *.pyc
 # C extensions

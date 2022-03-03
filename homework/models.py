@@ -5,10 +5,10 @@ from forms.models import FileBaseResponse
 # Create your models here.
 from utils.files import filename_generator, document_fileextension_validator as dfv
 
-
-def class_filename_generator(instance, filename):
-    print("subclass method")
-    return filename_generator(instance, filename, "submissions")
+#
+# def class_filename_generator(instance, filename):
+#     print("subclass method")
+#     return filename_generator(instance, filename, "submissions")
 
 class Work(models.Model):
     PRACTICAL = 'PR'
@@ -29,11 +29,6 @@ class Work(models.Model):
 
     def __str__(self):
         return self.title
-
-
-# def submission_filename_generator(instance, filename):
-#     print("subclass method")
-#     return filename_generator(instance, filename, "submissions")
 
 
 class Submission(FileBaseResponse):
