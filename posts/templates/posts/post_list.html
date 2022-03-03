@@ -348,7 +348,19 @@
             ;
 }).hide();
     });
-
+    window.addEventListener("load", ()=>{
+        const dataset = $('#announcements_table tbody').find('tr');
+        dataset.show()
+        dataset.filter(function (index, item){
+            console.log("filter 1" + $(item).find("div[posts-tags]").text())
+            console.log("filter 2" + "{{ announcements.0.ANNOUNCEMENT }}")
+            if ($(item).find("td[posts-tags]").text()=="{{ announcements.0.ANNOUNCEMENT }}") {
+                return false;
+            } else {
+                return true;
+            }
+        }).hide()
+    })
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         console.log("hiok")
         const dataset = $('#announcements_table tbody').find('tr');

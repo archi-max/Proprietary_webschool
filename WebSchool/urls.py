@@ -29,5 +29,6 @@ urlpatterns = [
     path('formsuccess/',TemplateView.as_view(template_name='backend/form_success.html'), name="formsuccess"),
     path('',include('user.urls')),
     path('',RedirectView.as_view(url='/posts/'), name='index'),
+    path('ar/', TemplateView.as_view(template_name='backend/arpage.html'), name='ar'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

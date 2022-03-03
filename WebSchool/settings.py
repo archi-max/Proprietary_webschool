@@ -33,7 +33,6 @@ INSTALLED_APPS = [
     'classes.apps.ClassesConfig',
     'homework.apps.HomeworkConfig',
     'exams.apps.ExamsConfig',
-    'staticpages.apps.StaticpagesConfig',
     'notes.apps.NotesConfig',
     'forms.apps.FormsConfig',
     'posts.apps.PostsConfig',
