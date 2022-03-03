@@ -65,8 +65,6 @@ class WorkListView(ListView):
         print(dat)
         context['homeworks'] = dat
         context['create_form'] = WorkForm()
-        # context['submission_form'] = SubmissionForm()
-        # context['submission_file'] = lambda x: get_submission_file(x, self.request.user)
         return context
 
     def get_queryset(self):
