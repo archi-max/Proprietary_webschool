@@ -4,14 +4,22 @@ from django.contrib.auth.models import Group
 from datetime import datetime
 
 # Create your models here.
-class Class(models.Model):
 
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,  related_name='classes')
-    starts_at = models.TimeField()
+class Event(models.Model):
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,  related_name='events')
+    start = models.TimeField()
+    end = models.TimeField(null=True, blank=True)
+    groups = models.ManyToManyField(Group)
+    allday = models.BooleanField(default=True)
+    title = models.CharField(max_length=15)
+    url = models.URLField(max_length=200, null=True, blank=True)
+    background_color = models.CharField(max_length=7, default='#03a9f3')
+
+class Class(models.Model):
     days = models.CharField(max_length=13) # day number, seperated by comma. Sunday is 0
     meeting_id = models.CharField(max_length=42)
-    groups = models.ManyToManyField(Group)
     subject = models.CharField(max_length=50)
+    event = models.OneToOneField(Event, on_delete=models.CASCADE, related_name='classes')
 
     def __str__(self):
         return self.subject + " " + self.created_by.get_full_name()
@@ -34,3 +42,6 @@ class Class(models.Model):
     @property
     def on_days(self):
         return [int(d) for d in self.days.split(",")]
+
+
+

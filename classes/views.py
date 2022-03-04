@@ -10,7 +10,7 @@ User = get_user_model()
 # Create your views here
 def get_classes(user):
     if user.user_type == User.TEACHER:  # Show Classes For the Day
-        q = Class.objects.filter(created_by=user)
+        q = Class.objects.filter(event__created_by=user)
     else:
         q = Class.objects.filter(groups__in=user.groups.all())
     return q
@@ -38,7 +38,7 @@ class ClassUpdateView(UpdateView):
 class ClassListView(ListView):
     model = Class
     template_name = 'classes/list.html'
-    context_object_name = 'classes'
+    context_object_name = 'events'
 
     def get_queryset(self):
         q = get_classes(self.request.user).distinct()
