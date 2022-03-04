@@ -250,16 +250,29 @@ box-shadow: 0px 0px 21px 2px rgba(0,0,0,0.18);
 					end: new Date(y, m, 29),
 					url: 'https://ccp.cloudaccess.net/aff.php?aff=5188',
 					className: 'success'
-				}
+				},
+            {
+                        title: 'yok',
+                        start: new Date(2022, 3, 5, 1, 0),
+                        end: new Date(2022, 3, 5, 2, 0),
+                        allDay: false,
+                        className: 'important'
+                    },
+            {
+					title: 'Meeting',
+					start: new Date(y, m, 5, 10, 30),
+					allDay: false,
+					className: 'important'
+				},
                 {% for event in events %}
                     {
                         title: '{{ event.title }}',
-                        start: new Date({{ event.start }}),
-                    {% if event.end %}end: '{{ event.end }}',{% endif %}
+                        start: new Date({{ event.start|date:"o, n-1, j, G, i" }}),
+                    {% if event.end %}end: new Date({{ event.end|date:"o, n-1, j, G, i" }}),{% endif %}
                     {% if event.url %}url: '{{ event.url }}',{% endif %}
                     {% if event.background_color %}   background_color: '{{ event.background_color }}',{% endif %}
-                        allDay: '{{ event.allDay|lower }}
-                    }
+                        allDay: {{ event.allday|lower }}
+                    },
                 {% endfor %}
 			],
 		});

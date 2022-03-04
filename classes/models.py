@@ -7,8 +7,8 @@ from datetime import datetime
 
 class Event(models.Model):
     created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,  related_name='events')
-    start = models.TimeField()
-    end = models.TimeField(null=True, blank=True)
+    start = models.DateTimeField()
+    end = models.DateTimeField(null=True, blank=True)
     groups = models.ManyToManyField(Group)
     allday = models.BooleanField(default=True)
     title = models.CharField(max_length=15)
