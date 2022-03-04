@@ -47,22 +47,34 @@ from .forms import NotebookForm
 
 
 class NotebookFormView(FormView):
-    template_name = 'notes/form.html'
+    template_name = 'backend/form_page.html'
     form_class = NotebookForm
-    success_url = '/notes/'
+    success_url = '/formsuccess/'
 
     def form_valid(self, form):
-        notebook = form.save(commit=False)
+        notebook = form.save(user=self.request.user,commit=False)
         notebook.created_by = self.request.user
         notebook.save()
         return super().form_valid(form)
 
 class NotebookListView(ListView):
     model = Notebook
-    template_name = 'notes/documents.html'
+    template_name = 'notes/list.html'
 
     def get_queryset(self):
         return Notebook.objects.filter(created_by=self.request.user).order_by('-created_at')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        q = self.request.user.notebookdatabase_set.all().order_by('-created_at')
+        print("q",q)
+        if len(q) > 0:
+            print("using existing vals:")
+            form = NotebookForm(initial={'database_url': q[0].url})
+        else:
+            form = NotebookForm()
+        context['notebook_create_form'] = form
+        return context
 
 class NotebookUpdateView(UpdateView):
     model = Notebook

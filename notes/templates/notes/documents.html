@@ -20,7 +20,7 @@
           {% for desc in object_list %}
           <div class="document">
             <div>{{desc.title}}</div>
-            <a href="http://localhost:3000/p/{{ desc.notebook_id }}" target="_blank">
+            <a href="{{ desc.url }}" target="_blank">
               <i class="bi bi-pen"></i>
             </a>
           </div>

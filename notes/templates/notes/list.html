@@ -1,18 +1,152 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Posts</title>
-</head>
-<body>
-<ul>
-{% for nb in object_list %}
-    <a href="http://localhost:3000/p/{{ nb.notebook_id }}" target="_blank">
-        <li>{{ nb }}</li>
-    </a>
-{% empty %}
-    <li>No notebook yet.</li>
-{% endfor %}
-</ul>
-</body>
-</html>
+{% extends 'backend/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="modal fade" id="notes_create_modal" tabindex="-1" role="dialog" aria-labelledby="createnotesModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create Notebook</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="newNotesForm" action="{% url 'notes:new' %}" method="post"
+                          enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ notebook_create_form }}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="newNotesButton">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="desktop-header">
+            <div class="card card-block topnav-left">
+                <div class="card-body write-card">
+                     <div class="d-flex flex-wrap align-items-center justify-content-between">
+
+                            <div class="iq-note-callapse-menu">
+                            <a  class="iq-note-callapse-btn show-note-button" data-target="#notes_create_modal" data-toggle="modal" href="#collapseMenu" role="button" data-extra-toggle="toggle" data-extra-class-show="" aria-expanded="false">
+                                    <i class="las la-pencil-alt pr-2"></i>Write Your Note
+                                </a>
+                                <span class="hide-note-button d-none"><i class="las la-folder pr-2"></i>Folder</span>
+                            </div>
+                           <div class="media flex-wrap align-items-center">
+                              <div class="form-group mb-0"> <input type="search" class="form-control" id="notesSearch" placeholder="Search"></div>
+
+                           </div>
+                     </div>
+                  </div>
+            </div>
+
+        </div>
+        <div class="row">
+            {% for desc in object_list %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card card-block stretched-link card-stretch card-height card-bottom-border-info">
+                    <div class="card-body rounded">
+                        <h4 class="card-title"><a class="stretched-link text-black-100" href="{{ desc.url }}">{{desc.title}}</a></h4>
+                        <p class="mb-3 card-description short">{{desc.title}}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block custom_js %}
+    <script>
+        $('#newNotesButton').on('click',function() {
+        const form = $('#newNotesForm');
+        $.ajax({
+            url: form.attr('action'),
+            type: 'POST',
+            data: form.serialize(),
+            success: function(data) {
+                const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: 'btn btn-primary',
+              cancelButton: 'btn btn-outline-primary ml-2'
+            },
+            buttonsStyling: false
+          })
+                try {
+                    if (JSON.parse(data) === 'success') {
+                        console.log("got success")
+
+                        swalWithBootstrapButtons.fire({
+                                title: 'Success!',
+                                icon: 'success',
+                                text: "successfully added the homework",
+                                showCancelButton: false,
+                                confirmButtonText: 'OK',
+                                reverseButtons: true
+                            }).then((result) => {
+                                location.reload();
+                                 $(this).find("input").each(function(i){$(this).val('')})
+                                console.log(result)
+                            })
+                    } else {
+                        form.innerHTML = data.toString();
+
+                    }
+                } catch (e) {
+                    form.html(data);
+                    console.log(data.toString())
+                }
+            },
+            error: function(data) {
+                console.log(data);
+            }
+        });
+    });
+
+            $('#notesSearch').on('keyup',function() {
+        {#alert("hi");#}
+
+        const selection = $(this).val();
+        console.log("val: "+selection);
+        const dataset = $('.col-lg-4, .col-md-6');
+        dataset.css("display","")
+        dataset.filter(function(index, item){
+            if ($(item).find(".card-title").text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
+                return false;
+            } if ($(item).find('.card-description').text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
+                return false;
+            }   else {
+                return true;
+            }
+            ;
+}).css("display", "none");
+    });
+
+    </script>
+{% endblock %}
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>Posts</title>#}
+{#</head>#}
+{#<body>#}
+{#<ul>#}
+{#{% for nb in object_list %}#}
+{#    <a href="{{ nb.url }}" target="_blank">#}
+{#        <li>{{ nb }}</li>#}
+{#    </a>#}
+{#{% empty %}#}
+{#    <li>No notebook yet.</li>#}
+{#{% endfor %}#}
+{#</ul>#}
+{#</body>#}
+{#</html>#}
+
