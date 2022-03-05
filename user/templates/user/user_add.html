@@ -2,202 +2,217 @@
 {% load static %}
 {% block content %}
 <div class="container-fluid">
-  <div class="desktop-header">
-      <div class="card card-block topnav-left">
-          <div class="card-body d-flex align-items-center">
-              <div class="d-flex justify-content-between">
-                  <h4 class="text-capitalize">User</h4>
-              </div>
-          </div>
-      </div>
-
-  </div>        </div>
-<div class="container-fluid">
- <div class="row">
-    {% csrf_token %}
-    <div class="col-xl-3 col-lg-4">
-          <div class="card">
-             <div class="card-header d-flex justify-content-between">
-                <div class="header-title">
-                   <h4 class="card-title">Add New User</h4>
+    <div class="desktop-header">
+        <div class="card card-block topnav-left">
+            <div class="card-body d-flex align-items-center">
+                <div class="d-flex justify-content-between">
+                    <h4 class="text-capitalize">User</h4>
                 </div>
-             </div>
-             <div class="card-body">
-                   <div class="form-group text-center">
-                      <div class="d-flex justify-content-center">
-                         <div class="crm-profile-img-edit">
-                            <img class="crm-profile-pic avatar-100" src="{% static 'assets/images/user/1.jpg' %}" alt="profile-pic">
-                            <div class="crm-p-image bg-primary">
-                               <i class="las la-pen upload-button"></i>
-                               <input class="file-upload" name="avatar" type="file" accept="image/*">
-                            </div>
-                         </div>
-                      </div>
-                   <div class="img-extension mt-3">
-                      <div class="d-inline-block align-items-center">
-                            <span>Only</span>
-                          <b>.jpg</b>
-                          <b>.png</b>
-                         <b>.jpeg</b>
-                         <span>allowed</span>
-                      </div>
-                   </div>
-                   </div>
-                   <div class="form-group">
-                      <label>User Role:</label>
-                      <select name="user_type" class="form-control" id="selectuserrole">
-                          {% for x, y in form.fields.user_type.choices %}
-                            <option value="{{ x }}"{% if form.fields.tags.value == x %} selected{% endif %}>{{ y }}</option>
-                          {% endfor %}
-                      </select>
-                   </div>
+            </div>
+        </div>
 
-             </div>
-          </div>
     </div>
-    <div class="col-xl-9 col-lg-8">
-          <div class="card">
-             <div class="card-header d-flex justify-content-between">
-                <div class="header-title">
-                   <h4 class="card-title">New User Information</h4>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        {% csrf_token %}
+        <div class="col-xl-3 col-lg-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="header-title">
+                        <h4 class="card-title">Add New User</h4>
+                    </div>
                 </div>
-             </div>
-             <div class="card-body">
-                <div class="new-user-info">
-                      <div class="row">
-                         <div class="form-group col-md-6">
-                            <label for="fname">First Name:</label>
-                            <input type="text" class="form-control" name="first_name" id="fname" placeholder="First Name">
-                         </div>
-                         <div class="form-group col-md-6">
-                            <label for="lname">Last Name:</label>
-                            <input type="text" class="form-control" name="last_name" id="lname" placeholder="Last Name">
-                         </div>
+                <div class="card-body">
+                    <div class="form-group text-center">
+                        <div class="d-flex justify-content-center">
+                            <div class="crm-profile-img-edit">
+                                <img class="crm-profile-pic avatar-100" src="{% static 'assets/images/user/1.jpg' %}"
+                                    alt="profile-pic">
+                                <div class="crm-p-image bg-primary">
+                                    <i class="las la-pen upload-button"></i>
+                                    <input class="file-upload" name="avatar" type="file" accept="image/*">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="img-extension mt-3">
+                            <div class="d-inline-block align-items-center">
+                                <span>Only</span>
+                                <b>.jpg</b>
+                                <b>.png</b>
+                                <b>.jpeg</b>
+                                <span>allowed</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>User Role:</label>
+                        <select name="user_type" class="form-control" id="selectuserrole">
+                            {% for x, y in form.fields.user_type.choices %}
+                            <option value="{{ x }}" {% if form.fields.tags.value == x %} selected{% endif %}>{{ y }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <div class="header-title">
+                        <h4 class="card-title">New User Information</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="new-user-info">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="fname">First Name:</label>
+                                <input type="text" class="form-control" name="first_name" id="fname"
+                                    placeholder="First Name">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="lname">Last Name:</label>
+                                <input type="text" class="form-control" name="last_name" id="lname"
+                                    placeholder="Last Name">
+                            </div>
 
 
-                         <div class="form-group col-md-6">
-                            <label for="email">Email:</label>
-                            <input type="email" name="email" class="form-control" id="email" placeholder="Email">
-                         </div>
+                            <div class="form-group col-md-6">
+                                <label for="email">Email:</label>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Email">
+                            </div>
 
-                        <div class="form-group col-md-6">
-                            <label for="id_groups">Groups:</label>
-                            <select name="groups" id="id_groups" multiple class="form-control">
-                                {% for x, y in form.fields.groups.choices %}
-                                    <option value="{{ x }}"{% if form.fields.groups.value == x %} selected{% endif %}>{{ y }}</option>
-                                {% endfor %}
-                            </select>
+                            <div class="form-group col-md-6">
+                                <label for="id_groups">Groups:</label>
+                                <select name="groups" id="id_groups" multiple class="form-control">
+                                    {% for x, y in form.fields.groups.choices %}
+                                    <option value="{{ x }}" {% if form.fields.groups.value == x %} selected{% endif %}>
+                                        {{ y }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                        </div>
+                        <hr>
+                        <h5 class="mb-3">Security</h5>
+                        <div class="row">
+
+                            <div class="form-group col-md-6">
+                                <label for="pass">Password:</label>
+                                <input type="password" name="password" class="form-control" id="pass"
+                                    placeholder="Password">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="rpass">Repeat Password:</label>
+                                <input type="password" name="password1" class="form-control" id="rpass"
+                                    placeholder="Repeat Password ">
+                            </div>
                         </div>
 
-                      </div>
-                      <hr>
-                      <h5 class="mb-3">Security</h5>
-                      <div class="row">
-
-                         <div class="form-group col-md-6">
-                            <label for="pass">Password:</label>
-                            <input type="password" name="password" class="form-control" id="pass" placeholder="Password" >
-                         </div>
-                         <div class="form-group col-md-6">
-                            <label for="rpass">Repeat Password:</label>
-                            <input type="password" name="password1" class="form-control" id="rpass" placeholder="Repeat Password ">
-                         </div>
-                      </div>
-
-                      <button id="useradd_submit" type="submit" class="btn btn-primary">Add New User</button>
+                        <button id="useradd_submit" type="submit" class="btn btn-primary">Add New User</button>
+                    </div>
                 </div>
-             </div>
-          </div>
+            </div>
+        </div>
     </div>
- </div>
 </div>
 {% endblock %}
 
 
 {% block custom_js %}
-    <script>
-        $("#useradd_submit").on('click', function() {
-            var mydata = {}
-            var data1 = new FormData();
+<script>
+    $("#useradd_submit").on('click', function () {
+        var mydata = {}
+        var data1 = new FormData();
 
-            $("input").each(function(i) {
-                const item = $(this)
-                mydata[item.attr('name')] = item.val();
+        $("input").each(function (i) {
+            const item = $(this)
+            mydata[item.attr('name')] = item.val();
+            data1.append(item.attr('name'), item.val());
+        })
+        $('select').each(function (i) {
+            const item = $(this)
+            mydata[item.attr('name')] = item.val();
+            if ((item.val().toString().indexOf(',') > -1)) {
+                item.val().toString().split(",").forEach(function (x) {
+                    data1.append(item.attr('name'), x);
+                })
+            } else {
                 data1.append(item.attr('name'), item.val());
-            })
-            $('select').each(function(i) {
-                const item = $(this)
-                mydata[item.attr('name')] = item.val();
-                if ((item.val().toString().indexOf(',') > -1)) {
-                    item.val().toString().split(",").forEach(function(x) {
-                        data1.append(item.attr('name'), x);
-                    })
-                } else {
-                    data1.append(item.attr('name'), item.val());
-                }
-            })
-            data1.set('avatar', $('input[name=avatar]')[0].files[0]);
-            console.log(data1);
-
-            $("input").each(function(i){
-                        $(this).removeClass('is-invalid');
-                        $(this).parent().children('.invalid-feedback').remove();
-                    })
-            if (mydata['password'] != mydata['password1'] ){
-                $("input[name=password1]").addClass('is-invalid')
-                $("input[name=password1]").parent().append('<div cl         ass="invalid-feedback">Passwords do not match</div>')
-                return false;
             }
-            console.log(mydata);
-            const swalWithBootstrapButtons = Swal.mixin({
+        })
+        data1.set('avatar', $('input[name=avatar]')[0].files[0]);
+        console.log(data1);
+
+        $("input").each(function (i) {
+            $(this).removeClass('is-invalid');
+            $(this).parent().children('.invalid-feedback').remove();
+        })
+        if (mydata['password'] != mydata['password1']) {
+            $("input[name=password1]").addClass('is-invalid')
+            $("input[name=password1]").parent().append(
+                '<div cl         ass="invalid-feedback">Passwords do not match</div>')
+            return false;
+        }
+        console.log(mydata);
+        const swalWithBootstrapButtons = Swal.mixin({
             customClass: {
-              confirmButton: 'btn btn-primary',
-              cancelButton: 'btn btn-outline-primary ml-2'
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-outline-primary ml-2'
             },
             buttonsStyling: false
-          })
-            $.ajax({
-                url: "{% url 'user:user_add' %}",
-                type: "POST",
-                enctype: 'multipart/form-data',
-                processData: false,
-                contentType: false,
-                data: data1,
-                success: function(data) {
-                    console.log(data);
-
-                    if (JSON.parse(data) == 'success') {
-                        console.log("success");
-                            swalWithBootstrapButtons.fire({
-                                title: 'Success!',
-                                icon: 'success',
-                                text: "successfully added the user",
-                                type: 'success',
-                                showCancelButton: false,
-                                confirmButtonText: 'OK',
-                                reverseButtons: true
-                            }).then((result) => {
-                                 $("input").each(function(i){$(this).val('')})
-                                console.log(result)
-                            })
-                        } else {
-                        const data_json = JSON.parse(data);
-                            for (const [key, value] of Object.entries(data_json)) {
-                                console.log(key, value);
-                                const this_input = $("input[name='" + key + "']")
-                                if (this_input === undefined) {
-                                    const this_input = $("select[name='" + key + "']")
-                                    this_input.addClass('is-invalid');
-                                    this_input.parent().append('<div class="invalid-feedback">' + value[0]["message"] + '</div>');
-                                } else {
-                                    this_input.addClass('is-invalid');
-                                    this_input.parent().append('<div class="invalid-feedback">' + value[0]["message"] + '</div>');
-                                }
-                            }
-
-                    }
-                }
-            });
         })
-    </script>
+        $.ajax({
+            url: "{% url 'user:user_add' %}",
+            type: "POST",
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            data: data1,
+            success: function (data) {
+                console.log(data);
+
+                if (JSON.parse(data) == 'success') {
+                    console.log("success");
+                    swalWithBootstrapButtons.fire({
+                        title: 'Success!',
+                        icon: 'success',
+                        text: "successfully added the user",
+                        type: 'success',
+                        showCancelButton: false,
+                        confirmButtonText: 'OK',
+                        reverseButtons: true
+                    }).then((result) => {
+                        $("input").each(function (i) {
+                            $(this).val('')
+                        })
+                        console.log(result)
+                    })
+                } else {
+                    const data_json = JSON.parse(data);
+                    for (const [key, value] of Object.entries(data_json)) {
+                        console.log(key, value);
+                        const this_input = $("input[name='" + key + "']")
+                        if (this_input === undefined) {
+                            const this_input = $("select[name='" + key + "']")
+                            this_input.addClass('is-invalid');
+                            this_input.parent().append('<div class="invalid-feedback">' + value[0][
+                                "message"
+                            ] + '</div>');
+                        } else {
+                            this_input.addClass('is-invalid');
+                            this_input.parent().append('<div class="invalid-feedback">' + value[0][
+                                "message"
+                            ] + '</div>');
+                        }
+                    }
+
+                }
+            }
+        });
+    })
+</script>
 {% endblock %}
