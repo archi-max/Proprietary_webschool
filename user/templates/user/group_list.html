@@ -1,33 +1,17 @@
 {% extends 'backend/base.html' %} {% block content %}
 
-<div
-  class="modal fade"
-  id="new-group-modal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="createWorkModalLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="new-group-modal" tabindex="-1" role="dialog" aria-labelledby="createWorkModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Create Group</h5>
-        <button
-          type="button"
-          class="close"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form
-          id="new-group-form"
-          action="{% url 'user:group_create' %}"
-          method="post"
-          enctype="multipart/form-data"
-        >
+        <form id="new-group-form" action="{% url 'user:group_create' %}" method="post" enctype="multipart/form-data">
           {% csrf_token %} {{ new_group_form }}
         </form>
       </div>
@@ -62,32 +46,17 @@
                 <div id="group_list_datatable_info" class="dataTables_filter">
                   <form class="mr-3 position-relative">
                     <div class="form-group mb-0">
-                      <input
-                        type="search"
-                        class="form-control"
-                        id="group-list-search"
-                        placeholder="Search"
-                        aria-controls="group-list-table"
-                      />
+                      <input type="search" class="form-control" id="group-list-search" placeholder="Search"
+                        aria-controls="group-list-table" />
                     </div>
                   </form>
                 </div>
               </div>
-              <a
-                href="#"
-                id="show-new-group-btn"
-                class="btn btn-primary add-btn"
-                data-toggle="work_create_modal"
-                data-target="work_create_modal"
-                ><i class="las la-plus pr-2"></i>New Group</a
-              >
+              <a href="#" id="show-new-group-btn" class="btn btn-primary add-btn" data-toggle="work_create_modal"
+                data-target="work_create_modal"><i class="las la-plus pr-2"></i>New Group</a>
             </div>
-            <table
-              id="group-list-table"
-              class="table table-striped tbl-server-info mt-4"
-              role="grid"
-              aria-describedby="user-list-page-info"
-            >
+            <table id="group-list-table" class="table table-striped tbl-server-info mt-4" role="grid"
+              aria-describedby="user-list-page-info">
               <thead>
                 <tr class="ligth">
                   <th>Name</th>
@@ -100,12 +69,8 @@
                   <td>{{ group.name }}</td>
                   <td>
                     <div class="flex align-items-center list-user-action">
-                      <button
-                        class="btn btn-danger iq-bg-primary"
-                        title=""
-                        data-original-title="Delete"
-                        onclick="$(this).find('form').submit()"
-                      >
+                      <button class="btn btn-danger iq-bg-primary" title="" data-original-title="Delete"
+                        onclick="$(this).find('form').submit()">
                         <i class="ri-delete-bin-line" style="margin: 0px"></i>
                       </button>
                     </div>
