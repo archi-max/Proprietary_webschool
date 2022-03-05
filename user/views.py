@@ -70,6 +70,7 @@ class UserCreateView(CreateView):
 
     def form_valid(self, form):
         user = form.save(commit=True)
+        user.set_password(form.cleaned_data['password'])
         print(form.cleaned_data)
         for grp in form.cleaned_data['groups']: user.groups.add(grp)
         return super(UserCreateView, self).form_valid(form)
