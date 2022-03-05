@@ -1,7 +1,7 @@
 from django.views.generic.edit import FormView, UpdateView
 from django.views.generic import ListView, DetailView
 from .models import Class, Event
-from .forms import ClassCreateForm
+from .forms import ClassCreateForm, EventCreateForm
 from django.contrib.auth import get_user_model
 from datetime import datetime
 
@@ -27,7 +27,6 @@ class ClassCreateView(FormView):
         cls.save()
         return super().form_valid(form)
 
-
 class ClassUpdateView(UpdateView):
     model = Class
     template_name = 'classes/form.html'
@@ -35,10 +34,31 @@ class ClassUpdateView(UpdateView):
     success_url = '/classes/'
 
 
+class EventCreateView(FormView):
+    model = Event
+    form_class = EventCreateForm
+    template_name = 'backend/form_page.html'
+    success_url = '/formsuccess/'
+
+    def form_valid(self, form):
+        event = form.save(commit=False)
+        event.created_by = self.request.user
+        event.save()
+        for grp in form.cleaned_data['groups']:
+            event.groups.add(grp)
+
+        event.save()
+        return super().form_valid(form)
+
 class ClassListView(ListView):
     model = Event
     template_name = 'classes/list.html'
     context_object_name = 'events'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['event_form'] = EventCreateForm()
+        return context
 
     def get_queryset(self):
         return Event.objects.filter(groups__in=self.request.user.groups.all()).distinct()

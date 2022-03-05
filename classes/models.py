@@ -12,6 +12,7 @@ class Event(models.Model):
     groups = models.ManyToManyField(Group)
     allday = models.BooleanField(default=True)
     title = models.CharField(max_length=15)
+    description = models.CharField(max_length=10000, null=True, blank=True)
     url = models.URLField(max_length=200, null=True, blank=True)
     background_color = models.CharField(max_length=7, default='#03a9f3')
 
@@ -42,6 +43,3 @@ class Class(models.Model):
     @property
     def on_days(self):
         return [int(d) for d in self.days.split(",")]
-
-
-
