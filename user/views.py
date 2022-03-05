@@ -6,6 +6,8 @@ from django.views.generic import TemplateView, ListView
 import csv
 from django.contrib.auth import views as auth_views
 from django.urls import reverse
+from django.contrib.auth.models import Group
+from .forms import NewGroupForm
 
 ### FORMS
 
@@ -83,6 +85,22 @@ class UserListView(ListView):
     def get_queryset(self):
         res = User.objects.filter(groups__in=self.request.user.groups.all()).distinct()
         return res
+
+class GroupListView(ListView):
+    model = Group
+    template_name = 'user/group_list.html'
+    context_object_name = 'groups'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['new_group_form'] = NewGroupForm()
+        return context
+
+class GroupCreateView(CreateView):
+    model = Group
+    form_class = NewGroupForm
+    template_name = 'backend/form_page.html'
+    success_url = '/formsuccess/'
 
 class UserDeleteView(DeleteView):
     model = User
