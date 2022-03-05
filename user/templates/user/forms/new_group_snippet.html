@@ -1,0 +1,14 @@
+<div class="form-group">
+  <label for="id_title">Name</label>
+  <input
+    class="form-control {% if form.name.errors %} is-invalid {% endif %}"
+    type="text"
+    name="name"
+    maxlength="100"
+    required=""
+    id="id_title"
+  />
+  {% if form.name.errors %}
+  <div class="invalid-feedback">{{ form.name.errors }}</div>
+  {% endif %}
+</div>
