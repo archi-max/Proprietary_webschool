@@ -13,15 +13,15 @@
       <div class="modal-body">
         <form id="new-group-form" action="{% url 'user:group_create' %}" method="post" enctype="multipart/form-data">
           {% csrf_token %} {{ new_group_form }}
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="new-group-btn">
+              Save
+            </button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+          </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="new-group-btn">
-          Save
-        </button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          Close
-        </button>
       </div>
     </div>
   </div>
@@ -109,8 +109,9 @@
     $("#new-group-modal").modal("show");
   });
 
-  $("#new-group-btn").on("click", function () {
-    const form = $("#new-group-form");
+  $("#new-group-form").on("submit", function (e) {
+    e.preventDefault();
+    const form = $(this);
     $.ajax({
       url: form.attr("action"),
       type: "POST",
