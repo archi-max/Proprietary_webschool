@@ -43,11 +43,11 @@
         <form id="newPostForm" action="{% url 'posts:create' %}" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           {{ create_form }}
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" id="newPostButton">Save</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
         </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id="newPostButton">Save</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -119,8 +119,8 @@
                         data-toggle="description_modal" data-target="#description_modal"><i class="lar la-eye"></i>
                         <p style="display: none">{{ announcement.description }}</p>
                       </a>{% endif %}
-                      {% if announcement.created_by == request.user %}<form style="display: none"
-                        action="{% url 'posts:delete' announcement.id %}" method="POST"
+                      {% if announcement.created_by == request.user %}
+                      <form style="display: none" action="{% url 'posts:delete' announcement.id %}" method="POST"
                         id="announcement_{{ announcement.id }}">{% csrf_token %}</form><a href="#"
                         announcement_id="{{ announcement.id }}" class="badge badge-danger"
                         data-extra-toggle="delete_announcement" data-closest-elem="tr"><i
@@ -154,8 +154,9 @@
   $('[data-toggle=ann_create_modal]').on('click', function () {
     $('#ann_create_modal').modal('show');
   });
-  $('#newPostButton').on('click', function () {
-    const form = $('#newPostForm');
+  $('#newPostForm').on('submit', function (e) {
+    e.preventDefault();
+    const form = $(this);
     $.ajax({
       url: form.attr('action'),
       type: 'POST',
