@@ -16,10 +16,6 @@
                 <form id="newNotesForm" action="{% url 'notes:new' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{ notebook_create_form }}
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary" id="newNotesButton">Save</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
                 </form>
             </div>
         </div>

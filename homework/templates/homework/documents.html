@@ -44,14 +44,6 @@
       <div class="modal-body">
         <form id="newWorkForm" action="{% url 'homework:work_create' %}" method="post" enctype="multipart/form-data">
           {% csrf_token %} {{ create_form }}
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary" id="newWorkButton">
-              Save
-            </button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">
-              Close
-            </button>
-          </div>
         </form>
       </div>
     </div>
@@ -129,7 +121,8 @@
                     {% if submission_file %}<a href="{{ submission_file.url }}" class=""><i
                         class="las la-download mr-2 font-size-20"></i>My
                       Submission</a>{% endif %}
-                    <a href="#" class=""><i class="las la-calendar mr-2 font-size-20"></i>{{ homework.upload_by|date:"j M Y" }}</a>
+                    <a href="#" class=""><i
+                        class="las la-calendar mr-2 font-size-20"></i>{{ homework.upload_by|date:"j M Y" }}</a>
                   </div>
                 </div>
               </div>
