@@ -19,36 +19,23 @@
                 <div id="user_list_datatable_info" class="dataTables_filter">
                   <form class="mr-3 position-relative">
                     <div class="form-group mb-0">
-                      <input
-                        type="search"
-                        class="form-control"
-                        id="userListSearch"
-                        placeholder="Search"
-                        aria-controls="user-list-table"
-                      />
+                      <input type="search" class="form-control" id="userListSearch" placeholder="Search"
+                        aria-controls="user-list-table" />
                     </div>
                   </form>
                 </div>
               </div>
               <div class="col-sm-6 col-md-6">
                 <div class="user-list-files d-flex">
-                  <a
-                    class="bg-primary"
-                    href="#"
-                    onclick="$('#user-list-table').print();"
-                  >
+                  <a class="bg-primary" href="#" onclick="$('#user-list-table').print();">
                     Print
                   </a>
                   <a class="bg-primary" href="{% url 'user:export' %}"> CSV </a>
                 </div>
               </div>
             </div>
-            <table
-              id="user-list-table"
-              class="table table-striped tbl-server-info mt-4"
-              role="grid"
-              aria-describedby="user-list-page-info"
-            >
+            <table id="user-list-table" class="table table-striped tbl-server-info mt-4" role="grid"
+              aria-describedby="user-list-page-info">
               <thead>
                 <tr class="ligth">
                   <th>Profile</th>
@@ -61,27 +48,15 @@
                 {% for user_tolist in users %}
                 <tr>
                   <td class="text-center">
-                    <img
-                      class="rounded img-fluid avatar-40"
-                      src="{{ user_tolist.avatar.url }}"
-                      alt="profile"
-                    />
+                    <img class="rounded img-fluid avatar-40" src="{{ user_tolist.avatar.url }}" alt="profile" />
                   </td>
                   <td>{{ user_tolist.get_full_name }}</td>
                   <td>{{ user_tolist.email }}</td>
                   <td>
                     <div class="flex align-items-center list-user-action">
-                      <button
-                        class="btn btn-danger iq-bg-primary"
-                        title=""
-                        data-original-title="Delete"
-                        onclick="$(this).find('form').submit()"
-                      >
-                        <form
-                          style="display: none"
-                          action="{% url 'user:delete' user_tolist.id%}"
-                          method="post"
-                        >
+                      <button class="btn btn-danger iq-bg-primary" title="" data-original-title="Delete"
+                        onclick="$(this).find('form').submit()">
+                        <form style="display: none" action="{% url 'user:delete' user_tolist.id%}" method="post">
                           {% csrf_token %}
                         </form>
                         <i class="ri-delete-bin-line" style="margin: 0px"></i>
