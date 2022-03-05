@@ -96,16 +96,19 @@
               </thead>
               <tbody>
                 {% for group in groups %}
-                <tr>
-                  <td>{{ group.name }}</td>
+                <tr id="group_{{ group.id }}">
+                  <td >{{ group.name }}</td>
                   <td>
                     <div class="flex align-items-center list-user-action">
                       <button
+                              data-extra-toggle="delete_group"
                         class="btn btn-danger iq-bg-primary"
                         title=""
                         data-original-title="Delete"
-                        onclick="$(this).find('form').submit()"
+                        group_id="{{ group.id }}"
+
                       >
+                          <form action="{% url 'user:group_delete' group.id %}" method="post">{% csrf_token %}</form>
                         <i class="ri-delete-bin-line" style="margin: 0px"></i>
                       </button>
                     </div>

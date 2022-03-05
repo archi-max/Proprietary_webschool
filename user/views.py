@@ -106,3 +106,8 @@ class UserDeleteView(DeleteView):
     model = User
     template_name = 'user/user_list.html'
     success_url = "/user/list/"
+
+class GroupDeleteView(DeleteView):
+    model = Group
+    template_name = 'backend/form_error.html'
+    success_url = "/formsuccess/"

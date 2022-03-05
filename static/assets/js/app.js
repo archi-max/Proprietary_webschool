@@ -600,7 +600,7 @@ Index Of Script
                             $("#note_"+notesId).remove()
                           swalWithBootstrapButtons.fire({
                                 title: 'Deleted!',
-                                text: "Your homework has been deleted.",
+                                text: "Your note has been deleted.",
                                 icon: 'success',
                                 showClass: {
                                     popup: 'animate__animated animate__zoomIn'
@@ -611,6 +611,72 @@ Index Of Script
                             }
                           ).then(() => {
                                 location.reload()
+                          })
+                        }
+                    });
+
+            } else {
+                swalWithBootstrapButtons.fire({
+                    title: "Your note is safe!",
+                    showClass: {
+                        popup: 'animate__animated animate__zoomIn'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__zoomOut'
+                    }
+                });
+            }
+        });
+    })
+
+    $('[data-extra-toggle="delete_group"]').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: 'btn btn-primary',
+              cancelButton: 'btn btn-outline-primary ml-2'
+            },
+            buttonsStyling: false
+          })
+
+          swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            showClass: {
+                popup: 'animate__animated animate__zoomIn'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__zoomOut'
+            }
+        })
+        .then((willDelete) => {
+            if (willDelete.isConfirmed) {
+                const groupId = $(this).attr('group_id')
+                const ann_form = $(this).find("form")
+                $.ajax({
+                        type: "POST",
+                        url: ann_form.attr('action'),
+                        data: ann_form.serialize(), // serializes the form's elements.
+                        success: function(data)
+                        {
+                            $("#group_"+groupId).remove()
+                          swalWithBootstrapButtons.fire({
+                                title: 'Deleted!',
+                                text: "Your group has been deleted.",
+                                icon: 'success',
+                                showClass: {
+                                    popup: 'animate__animated animate__zoomIn'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__zoomOut'
+                                }
+                            }
+                          ).then(() => {
+                                console.log("deleted group")
                           })
                         }
                     });
