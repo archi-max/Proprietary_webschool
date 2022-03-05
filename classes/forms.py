@@ -1,10 +1,17 @@
 from django import forms
-from .models import Class
+from .models import Class, Event
 import uuid
 
 
 def generate_jitsi_id():
     return "webschool/" + uuid.uuid4().hex
+
+class EventCreateForm(forms.ModelForm):
+    template_name = "classes/forms/new_event_snippet.html"
+
+    class Meta:
+        model = Event
+        fields = ['title', 'start', 'end', 'groups', 'url', 'description']
 
 
 class ClassCreateForm(forms.ModelForm):
