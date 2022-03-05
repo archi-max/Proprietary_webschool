@@ -40,9 +40,3 @@ class NotebookListView(ListView):
             form = NotebookForm()
         context['notebook_create_form'] = form
         return context
-
-class NotebookUpdateView(UpdateView):
-    model = Notebook
-    template_name = 'notes/form.html'
-    fields = ['title', 'description']
-    success_url = '/notes/'
