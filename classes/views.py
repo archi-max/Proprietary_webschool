@@ -1,6 +1,6 @@
 from django.views.generic.edit import FormView, UpdateView
 from django.views.generic import ListView, DetailView
-from .models import Class
+from .models import Class, Event
 from .forms import ClassCreateForm
 from django.contrib.auth import get_user_model
 from datetime import datetime
@@ -10,7 +10,7 @@ User = get_user_model()
 # Create your views here
 def get_classes(user):
     if user.user_type == User.TEACHER:  # Show Classes For the Day
-        q = Class.objects.filter(created_by=user)
+        q = Class.objects.filter(event__created_by=user)
     else:
         q = Class.objects.filter(groups__in=user.groups.all())
     return q
@@ -36,14 +36,12 @@ class ClassUpdateView(UpdateView):
 
 
 class ClassListView(ListView):
-    model = Class
+    model = Event
     template_name = 'classes/list.html'
-    context_object_name = 'classes'
+    context_object_name = 'events'
 
     def get_queryset(self):
-        q = get_classes(self.request.user).distinct()
-        q = [c for c in q if c.is_today]
-        return q
+        return Event.objects.filter(groups__in=self.request.user.groups.all()).distinct()
 
 
 class DayClassListView(ListView):
