@@ -49,6 +49,14 @@ class NotebookForm(forms.ModelForm):
         model = Notebook
         fields = ['title', 'description']
 
+    def clean_database_url(self):
+        url = self.cleaned_data['database_url']
+        if not url.startswith('https://www.notion.so/'):
+            raise forms.ValidationError("Invalid URL")
+        # if NotebookDatabase.objects.filter(url=url).exclude(user).exists():
+        #     raise forms.ValidationError("Database is already being used by another user!")
+        return url
+
     def save(self, user, commit=True):
         notebook = super(NotebookForm, self).save(commit=False)
         dburl = self.cleaned_data['database_url']

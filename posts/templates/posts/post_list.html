@@ -331,10 +331,13 @@
         const selection = $(this).val();
         console.log("val: "+selection);
         const dataset = $('#announcements_table tbody').find('tr');
+        var post_tags = $(".nav-link.active").attr("data-tags")
         dataset.show()
         dataset.filter(function(index, item){
             console.log("filter result: "+($(item).children('td').eq(1).text().toLowerCase().indexOf(selection.toLowerCase()) === -1).toString())
-            if ($(item).find("td[data-column=name]").text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
+            if ($(item).find("td[posts-tags]").text() !== post_tags) {
+                return true;
+            } if ($(item).find("td[data-column=name]").text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
                 return false;
             } if ($(item).children('td').eq(1).text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
                 return false;
@@ -342,7 +345,7 @@
                 return false;
             } if ($(item).children('td').eq(3).find('p').text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
                 return false;
-            } else {
+            }  else {
                 return true;
             }
             ;
@@ -360,6 +363,7 @@
                 return true;
             }
         }).hide()
+
     })
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         console.log("hiok")

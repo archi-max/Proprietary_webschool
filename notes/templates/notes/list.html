@@ -51,12 +51,16 @@
         <div class="row">
             {% for desc in object_list %}
             <div class="col-lg-4 col-md-6">
-                <div class="card card-block stretched-link card-stretch card-height card-bottom-border-info">
+            <div class="card" id="#note_{{ desc.id }}">
+                <div class="card card-block stretched-link card-stretch card-height card-bottom-border-info mb-0">
                     <div class="card-body rounded">
                         <h4 class="card-title"><a class="stretched-link text-black-100" href="{{ desc.url }}">{{desc.title}}</a></h4>
-                        <p class="mb-3 card-description short">{{desc.title}}</p>
+                        <p class="mb-3 card-description short">{{desc.description}}</p>
+
                     </div>
                 </div>
+                <a href="#" note_id="{{ desc.id }}" data-extra-toggle="delete_card" class="btn btn-danger card-description"><i class="las la-trash-alt"></i> <span style="font-size: 0.8rem;">Delete</span><form id="noteForm" action="{% url 'notes:delete' desc.id %}" method="post">{% csrf_token %}</form></a>
+            </div>
             </div>
             {% endfor %}
         </div>

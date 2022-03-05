@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 from django.views.generic.detail import DetailView
 import requests as r
-from django.views.generic.edit import FormView, UpdateView
+from django.views.generic.edit import FormView, DeleteView
 from django.views.generic import ListView
 from .forms import NotebookForm
 # Create your views here.
@@ -40,3 +40,11 @@ class NotebookListView(ListView):
             form = NotebookForm()
         context['notebook_create_form'] = form
         return context
+
+class NotebookDeleteView(DeleteView):
+    model = Notebook
+    template_name = 'backend/form_error.html'
+    success_url = '/formsuccess/'
+
+    def get_queryset(self):
+        return Notebook.objects.filter(created_by=self.request.user)

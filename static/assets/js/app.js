@@ -563,6 +563,71 @@ Index Of Script
         });
     })
 
+    $('[data-extra-toggle="delete_card"]').on('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: 'btn btn-primary',
+              cancelButton: 'btn btn-outline-primary ml-2'
+            },
+            buttonsStyling: false
+          })
+
+          swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            showClass: {
+                popup: 'animate__animated animate__zoomIn'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__zoomOut'
+            }
+        })
+        .then((willDelete) => {
+            if (willDelete.isConfirmed) {
+                const notesId = $(this).attr('note_id')
+                const ann_form = $(this).find("form")
+                $.ajax({
+                        type: "POST",
+                        url: ann_form.attr('action'),
+                        data: ann_form.serialize(), // serializes the form's elements.
+                        success: function(data)
+                        {
+                            $("#note_"+notesId).remove()
+                          swalWithBootstrapButtons.fire({
+                                title: 'Deleted!',
+                                text: "Your homework has been deleted.",
+                                icon: 'success',
+                                showClass: {
+                                    popup: 'animate__animated animate__zoomIn'
+                                },
+                                hideClass: {
+                                    popup: 'animate__animated animate__zoomOut'
+                                }
+                            }
+                          ).then(() => {
+                                location.reload()
+                          })
+                        }
+                    });
+
+            } else {
+                swalWithBootstrapButtons.fire({
+                    title: "Your note is safe!",
+                    showClass: {
+                        popup: 'animate__animated animate__zoomIn'
+                    },
+                    hideClass: {
+                        popup: 'animate__animated animate__zoomOut'
+                    }
+                });
+            }
+        });
+    })
 
     $('[data-extra-toggle="delete_announcement"]').on('click', function (e) {
         const closestElem = $(this).attr('data-closest-elem')
