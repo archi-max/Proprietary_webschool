@@ -15,16 +15,19 @@
 </div>
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="d-flex flex-wrap">
+        {% for model in models %}
         <div class="col-sm-6 col-md-6 col-lg-3">
             <div class="card bg-dark text-white">
-                <img class="card-img" src="{% static 'assets/images/VR Images/Bohr.png' %}" alt="Card image cap">
+                <img class="card-img" src="{% static 'assets/images/VR Images/' %}{{model.image}}" alt="Card image cap">
                 <div class="card-img-overlay">
-                    <h4 class="card-title text-white"><a href="#" class="stretched-link text-white">Bohr's model</a>
+                    <h4 class="card-title text-white"><a href="{{model.href}}"
+                            class="stretched-link text-white">{{model.title}}</a>
                     </h4>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
