@@ -39,12 +39,6 @@ class PostsCreatedViews(PostListView):
         return Post.objects.filter(created_by=self.request.user).order_by('-updated_at')
 
 
-class PostUpdateView(UpdateView):
-    model = Post
-    template_name = 'posts/create.html'
-    success_url = '/posts/'
-    # exclude = ['created_by', 'created_at', 'updated_at']
-    fields = ['title', 'description', 'file', 'tags', 'groups', 'is_active']
 
 class PostDeleteView(DeleteView):
     model = Post

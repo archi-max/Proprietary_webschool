@@ -84,17 +84,6 @@ class SubmissionListView(ListView):
         # else:
         #     return Submission.objects.filter(student=self.request.user.id)
 
-class WorkUpdateView(UpdateView):
-    model = Work
-    fields = ['title', 'description',  'upload_by', 'groups', 'work_type']
-    template_name = 'homework/create.html'
-    success_url = '/homework/'
-
-class SubmissionUpdateView(UpdateView):
-    model = Submission
-    fields = ['file']
-    template_name = 'homework/form.html'
-    success_url = '/homework/'
 
 class WorkDeleteView(DeleteView):
     model = Work

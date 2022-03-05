@@ -15,25 +15,6 @@ def get_classes(user):
         q = Class.objects.filter(groups__in=user.groups.all())
     return q
 
-class ClassCreateView(FormView):
-    model = Class
-    template_name = 'classes/form.html'
-    form_class = ClassCreateForm
-    success_url = '/classes/'
-
-    def form_valid(self, form):
-        cls = form.save(commit=False)
-        cls.created_by = self.request.user
-        cls.save()
-        return super().form_valid(form)
-
-class ClassUpdateView(UpdateView):
-    model = Class
-    template_name = 'classes/form.html'
-    fields = ['subject','starts_at','days','groups']
-    success_url = '/classes/'
-
-
 class EventCreateView(FormView):
     model = Event
     form_class = EventCreateForm
@@ -50,7 +31,7 @@ class EventCreateView(FormView):
         event.save()
         return super().form_valid(form)
 
-class ClassListView(ListView):
+class EventListView(ListView):
     model = Event
     template_name = 'classes/list.html'
     context_object_name = 'events'
@@ -63,16 +44,6 @@ class ClassListView(ListView):
     def get_queryset(self):
         return Event.objects.filter(groups__in=self.request.user.groups.all()).distinct()
 
-
-class DayClassListView(ListView):
-    model = Class
-    template_name = 'classes/list.html'
-
-
-    def get_queryset(self):
-        q = get_classes(self.request.user).distinct()
-        q = [obj for obj in q if obj.is_on_day(self.kwargs['day'])]
-        return q
 
 class ClassJoinView(DetailView):
     model = Class
