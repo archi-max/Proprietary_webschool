@@ -32,7 +32,7 @@
                                     <tr>
                                         <td>{{ submission.student.get_full_name }}</td>
                                         <td>
-                                            <a href="{{ submission.file.url }}" class="btn btn-success iq-bg-primary" onclick="" target="_blank">
+                                            <a href="{{ submission.file.url }}" id="submission_{{ submission.id }}" class="btn btn-success iq-bg-primary" onclick="window.open(document.getElementById('submission_{{ submission.id }}').getAttribute('href'))" target="_blank">
                                                 <i class="las la-eye" style="margin-right: 0px;"></i>
                                             </a>
                                         </td>
