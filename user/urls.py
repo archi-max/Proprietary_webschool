@@ -5,6 +5,8 @@ from . import views
 
 app_name = 'user'
 urlpatterns = [
+    path('groups/', views.GroupListView.as_view(), name='group_list'),
+    path('group/create/', views.GroupCreateView.as_view(), name='group_create'),
     path('login/', auth_views.LoginView.as_view(template_name='user/login_file.html'), name='login'),
     path('logout/', views.UserLogoutView.as_view(next_page="/login"), name='logout'),
     path('users/export/', views.export_users, name='export'),
