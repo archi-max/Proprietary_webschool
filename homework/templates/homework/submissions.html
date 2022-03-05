@@ -1,0 +1,52 @@
+{% extends 'backend/base.html' %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="desktop-header">
+            <div class="card card-block topnav-left">
+                <div class="card-body write-card">
+                    <div class="d-flex flex-wrap align-items-center justify-content-between">
+                        <h4>Submissions</h4>
+                        <div class="media flex-wrap align-items-center">
+                            <div class="form-group mb-0">
+                                <input type="search" class="form-control" id="submissionSearch" placeholder="Search"/>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card card-block card-stretch card-height note-table">
+                    <div class="card-body custom-notes-space">
+                        <div class="table-responsive">
+                            <table id="submissions_table" class="table tree mb-0 tbl-server-info">
+                                <thead>
+                                <tr class="ligth">
+                                    <th>Name</th>
+                                    <th>File</th>
+                                </tr>
+                                <tbody>
+                                {% for submission in submissions %}
+                                    <tr>
+                                        <td>{{ submission.student.get_full_name }}</td>
+                                        <td>
+                                            <a href="{{ submission.file.url }}" class="btn btn-success iq-bg-primary" onclick="" target="_blank">
+                                                <i class="las la-eye" style="margin-right: 0px;"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+
+                                </tbody>
+                                </thead>
+                            </table>
+                        <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

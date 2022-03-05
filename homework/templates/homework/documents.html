@@ -102,7 +102,7 @@
                       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="note-dropdownMenuButton4"
                         style="">
                         {% if homework.created_by == request.user %}
-                        <a href="#" class="dropdown-item new-note1" data-toggle="modal" data-target="#new-note1"><i
+                        <a href="{% url 'homework:submission_list' homework.id %}" class="dropdown-item new-note1" data-toggle="modal" data-target="#new-note1"><i
                             class="las la-eye mr-3"></i>View Submissions</a>
                         <a class="dropdown-item" data-extra-toggle="delete_homework" data-closest-elem=".data-card-work"
                           href="#"><i class="las la-trash-alt mr-3"></i>Delete
