@@ -75,26 +75,12 @@ class WorkListView(ListView):
 
 class SubmissionListView(ListView):
     model = Submission
-    template_name = 'homework/documents.html'
-    success_url = '/homework/'
-
+    template_name = 'homework/submissions.html'
+    context_object_name = 'submissions'
     def get_queryset(self):
         if self.request.user.user_type == self.request.user.TEACHER:
             return Submission.objects.filter(work=self.kwargs['pk']).order_by('-updated_at')
-        # else:
-        #     return Submission.objects.filter(student=self.request.user.id)
 
-class WorkUpdateView(UpdateView):
-    model = Work
-    fields = ['title', 'description',  'upload_by', 'groups', 'work_type']
-    template_name = 'homework/create.html'
-    success_url = '/homework/'
-
-class SubmissionUpdateView(UpdateView):
-    model = Submission
-    fields = ['file']
-    template_name = 'homework/form.html'
-    success_url = '/homework/'
 
 class WorkDeleteView(DeleteView):
     model = Work

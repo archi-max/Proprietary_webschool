@@ -1,7 +1,7 @@
 from django.views.generic.edit import FormView, UpdateView
 from django.views.generic import ListView, DetailView
 from .models import Class, Event
-from .forms import ClassCreateForm
+from .forms import ClassCreateForm, EventCreateForm
 from django.contrib.auth import get_user_model
 from datetime import datetime
 
@@ -15,44 +15,35 @@ def get_classes(user):
         q = Class.objects.filter(groups__in=user.groups.all())
     return q
 
-class ClassCreateView(FormView):
-    model = Class
-    template_name = 'classes/form.html'
-    form_class = ClassCreateForm
-    success_url = '/classes/'
+class EventCreateView(FormView):
+    model = Event
+    form_class = EventCreateForm
+    template_name = 'backend/form_page.html'
+    success_url = '/formsuccess/'
 
     def form_valid(self, form):
-        cls = form.save(commit=False)
-        cls.created_by = self.request.user
-        cls.save()
+        event = form.save(commit=False)
+        event.created_by = self.request.user
+        event.save()
+        for grp in form.cleaned_data['groups']:
+            event.groups.add(grp)
+
+        event.save()
         return super().form_valid(form)
 
-
-class ClassUpdateView(UpdateView):
-    model = Class
-    template_name = 'classes/form.html'
-    fields = ['subject','starts_at','days','groups']
-    success_url = '/classes/'
-
-
-class ClassListView(ListView):
+class EventListView(ListView):
     model = Event
     template_name = 'classes/list.html'
     context_object_name = 'events'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['event_form'] = EventCreateForm()
+        return context
+
     def get_queryset(self):
         return Event.objects.filter(groups__in=self.request.user.groups.all()).distinct()
 
-
-class DayClassListView(ListView):
-    model = Class
-    template_name = 'classes/list.html'
-
-
-    def get_queryset(self):
-        q = get_classes(self.request.user).distinct()
-        q = [obj for obj in q if obj.is_on_day(self.kwargs['day'])]
-        return q
 
 class ClassJoinView(DetailView):
     model = Class

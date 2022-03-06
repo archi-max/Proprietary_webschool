@@ -1,104 +1,93 @@
-{% extends 'backend/base.html' %}
+{% extends 'backend/base.html' %} {% block content %}
 
-{% block content %}
-
-        <div class="container-fluid">
-          <div class="desktop-header">
-
-
-          </div>        </div>
-      <div class="container-fluid">
-         <div class="row">
-            <div class="col-sm-12">
-                  <div class="card">
-                     <div class="card-header d-flex justify-content-between">
-                        <div class="header-title">
-                           <h4 class="card-title">User List</h4>
-                        </div>
-                     </div>
-                     <div class="card-body">
-                        <div class="table-responsive">
-                           <div class="row justify-content-between">
-                              <div class="col-sm-6 col-md-6">
-                                 <div id="user_list_datatable_info" class="dataTables_filter">
-                                    <form class="mr-3 position-relative">
-                                       <div class="form-group mb-0">
-                                          <input type="search" class="form-control" id="userListSearch" placeholder="Search" aria-controls="user-list-table">
-                                       </div>
-                                    </form>
-                                 </div>
-                              </div>
-                              <div class="col-sm-6 col-md-6">
-                                 <div class="user-list-files d-flex">
-                                    <a class="bg-primary" href="#" onclick="$('#user-list-table').print();">
-                                       Print
-                                    </a>
-                                    <a class="bg-primary" href="{% url 'user:export' %}">
-                                       CSV
-                                    </a>
-                                 </div>
-                              </div>
-                           </div>
-                           <table id="user-list-table" class="table table-striped tbl-server-info mt-4" role="grid" aria-describedby="user-list-page-info">
-                           <thead>
-                              <tr class="ligth">
-                                 <th>Profile</th>
-                                 <th>Name</th>
-{#                                 <th>Contact</th>#}
-                                 <th>Email</th>
-{#                                 <th>Country</th>#}
-{#                                 <th>Status</th>#}
-{#                                 <th>Company</th>#}
-{#                                 <th>Join Date</th>#}
-                                 <th style="min-width: 100px">Action</th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                                {% for user_tolist in users %}
-                                    <tr>
-                                        <td class="text-center"><img class="rounded img-fluid avatar-40" src="{{ user_tolist.avatar.url }}" alt="profile"></td>
-                                        <td>{{ user_tolist.get_full_name }}</td>
-                                        <td>{{ user_tolist.email }}</td>
-                                        <td>
-                                            <div class="flex align-items-center list-user-action">
-                                                <button class="btn btn-danger iq-bg-primary"  title="" data-original-title="Delete" onclick="$(this).find('form').submit()"><form style="display: none" action="{% url 'user:delete' user_tolist.id%}" method="post">{% csrf_token %}</form> <i class="ri-delete-bin-line" style="margin: 0px;"></i></button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-
-                           </tbody>
-                           </table>
-                        </div>
-                           <br>
-                     </div>
-                  </div>
+<div class="container-fluid">
+  <div class="desktop-header"></div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between">
+          <div class="header-title">
+            <h4 class="card-title">User List</h4>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <div class="row justify-content-between">
+              <div class="col-sm-6 col-md-6">
+                <div id="user_list_datatable_info" class="dataTables_filter">
+                  <form class="mr-3 position-relative">
+                    <div class="form-group mb-0">
+                      <input type="search" class="form-control" id="userListSearch" placeholder="Search"
+                        aria-controls="user-list-table" />
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-6">
+                <div class="user-list-files d-flex">
+                  <a class="bg-primary" href="#" onclick="$('#user-list-table').print();">
+                    Print
+                  </a>
+                  <a class="bg-primary" href="{% url 'user:export' %}"> CSV </a>
+                </div>
+              </div>
             </div>
-         </div>
+            <table id="user-list-table" class="table table-striped tbl-server-info mt-4" role="grid"
+              aria-describedby="user-list-page-info">
+              <thead>
+                <tr class="ligth">
+                  <th>Profile</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th style="min-width: 100px">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for user_tolist in users %}
+                <tr>
+                  <td class="text-center">
+                    <img class="rounded img-fluid avatar-40" src="{{ user_tolist.avatar.url }}" alt="profile" />
+                  </td>
+                  <td>{{ user_tolist.get_full_name }}</td>
+                  <td>{{ user_tolist.email }}</td>
+                  <td>
+                    <div class="flex align-items-center list-user-action">
+                      <button class="btn btn-danger iq-bg-primary" title="" data-original-title="Delete"
+                        onclick="$(this).find('form').submit()">
+                        <form style="display: none" action="{% url 'user:delete' user_tolist.id%}" method="post">
+                          {% csrf_token %}
+                        </form>
+                        <i class="ri-delete-bin-line" style="margin: 0px"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <br />
+        </div>
       </div>
+    </div>
+  </div>
+</div>
 
-{% endblock %}
-
-{% block custom_js %}
-    <script>
-        $('#userListSearch').on('keyup',function() {
-        {#alert("hi");#}
-
-        const selection = $(this).val();
-        console.log("val: "+selection);
-        const dataset = $('#user-list-table tbody').find('tr');
-        dataset.show()
-        dataset.filter(function(index, item){
-            console.log("filter result: "+($(item).children('td').eq(1).text().toLowerCase().indexOf(selection.toLowerCase()) === -1).toString())
-             if ($(item).children('td').eq(1).text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
-                return false;
-            } if ($(item).children('td').eq(2).text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
-                return false;
-            }  else {
-                return true;
-            }
-            ;
-            }).hide();
-    });
-    </script>
+{% endblock %} {% block custom_js %}
+<script>
+  $("#userListSearch").on("keyup", function () {
+    const selection = $(this).val();
+    const dataset = $("#user-list-table tbody").find("tr");
+    dataset.show();
+    dataset
+      .filter(function (index, item) {
+        const children = $(item).children("td");
+        const combined = children.eq(1).text() + children.eq(2).text();
+        return !combined.toLowerCase().includes(selection.toLowerCase());
+      })
+      .hide();
+  });
+</script>
 {% endblock %}

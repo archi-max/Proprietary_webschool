@@ -1,65 +1,78 @@
 {% load static %}
-<html lang="en"><head>
-    <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <title>NotePlus | Responsive Bootstrap 4 Admin Dashboard Template</title>
+<html lang="en">
 
-      <!-- Favicon -->
-      <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}" />
-      <link rel="stylesheet" href="{% static 'assets/css/backend-plugin.min.css' %}">
-      <link rel="stylesheet" href="{% static 'assets/css/backend.css' %}">
-      <link rel="stylesheet" href="{% static 'assets/vendor/@fortawesome/fontawesome-free/css/all.min.css' %}">
-      <link rel="stylesheet" href="{% static 'assets/vendor/line-awesome/dist/line-awesome/css/line-awesome.min.css' %}">
-      <link rel="stylesheet" href="{% static 'assets/vendor/remixicon/fonts/remixicon.css' %}">
-      <link rel="stylesheet" href="{% static 'assets/vendor/@icon/dripicons/dripicons.css' %}">  </head>
-  <body class=" ">
-    <!-- loader Start -->
-    <div id="loading" style="display: none;">
-          <div id="loading-center">
-          </div>
-    </div>
-    <!-- loader END -->
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <title>NotePlus | Responsive Bootstrap 4 Admin Dashboard Template</title>
 
-      <div class="wrapper">
-       <section class="login-content">
+   <!-- Favicon -->
+   <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}" />
+   <link rel="stylesheet" href="{% static 'assets/css/backend-plugin.min.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/backend.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/vendor/@fortawesome/fontawesome-free/css/all.min.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/vendor/line-awesome/dist/line-awesome/css/line-awesome.min.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/vendor/remixicon/fonts/remixicon.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/vendor/@icon/dripicons/dripicons.css' %}">
+</head>
+
+<body class=" ">
+   <!-- loader Start -->
+   <div id="loading" style="display: none;">
+      <div id="loading-center">
+      </div>
+   </div>
+   <!-- loader END -->
+
+   <div class="wrapper">
+      <section class="login-content">
          <div class="container h-100">
             <div class="row justify-content-center align-items-center height-self-center">
                <div class="col-md-5 col-sm-12 col-12 align-self-center">
                   <div class="sign-user_card">
                      <div class="logo-detail">
-                           <div class="d-flex align-items-center"><img src="{% static 'assets/images/logo.png' %}" class="img-fluid rounded-normal light-logo logo" alt="logo"> <h4 class="logo-title ml-3">WebSchool</h4></div>
+                        <div class="d-flex align-items-center"><img src="{% static 'assets/images/logo.png' %}"
+                              class="img-fluid rounded-normal light-logo logo" alt="logo">
+                           <h4 class="logo-title ml-3">WebSchool</h4>
+                        </div>
                      </div>
                      <h3 class="mb-2">Sign In</h3>
                      <p>Login to stay connected.</p>
                      <form method="post" action="#">
-                         {% csrf_token %}
+                        {% csrf_token %}
                         <div class="row">
                            <div class="col-lg-12">
-                           {% if form.errors %}
-                        <div class="row">
-                           <div class="col-lg-12">
-                           <div class="alert alert-danger" role="alert">
-                           <div class="iq-alert-text">Your  username and password didn't match. Please try again.</div>
-                        </div>
-                        </div>
-                        </div>
-                           {% endif %}
+                              {% if form.errors %}
+                              <div class="row">
+                                 <div class="col-lg-12">
+                                    <div class="alert alert-danger" role="alert">
+                                       <div class="iq-alert-text">Your username and password didn't match. Please try
+                                          again.</div>
+                                    </div>
+                                 </div>
+                              </div>
+                              {% endif %}
                               <div class="floating-label form-group">
 
-                                 <input name="username" class="floating-input form-control {% if form.username.errors %}is-invalid{% endif %}" type="text" placeholder=" " >
+                                 <input name="username"
+                                    class="floating-input form-control {% if form.username.errors %}is-invalid{% endif %}"
+                                    type="text" placeholder=" ">
                                  <label>User ID</label>
-                                 {% if form.username.errors %}<div class="invalid-feedback">{{ form.username.errors }}</div>{% endif %}
+                                 {% if form.username.errors %}<div class="invalid-feedback">{{ form.username.errors }}
+                                 </div>{% endif %}
                               </div>
                            </div>
                            <div class="col-lg-12">
                               <div class="floating-label form-group">
-                                 <input class="floating-input form-control {% if form.password.errors %}is-invalid{% endif %}" name="password" type="password" placeholder=" " name="">
+                                 <input
+                                    class="floating-input form-control {% if form.password.errors %}is-invalid{% endif %}"
+                                    name="password" type="password" placeholder=" " name="">
                                  <label>Password</label>
-                                <div class="invalid-feedback">
+                                 <div class="invalid-feedback">
                                     {% if form.password.errors %}
-                                        {{ form.password.errors }}
+                                    {{ form.password.errors }}
                                     {% endif %}
-                                </div>
+                                 </div>
                               </div>
                            </div>
                         </div>
@@ -71,32 +84,34 @@
             </div>
          </div>
       </section>
-      </div>
+   </div>
 
-    <!-- Backend Bundle JavaScript -->
-    <script src="{% static 'assets/js/backend-bundle.min.js' %}"></script>
+   <!-- Backend Bundle JavaScript -->
+   <script src="{% static 'assets/js/backend-bundle.min.js' %}"></script>
 
-    <!-- Flextree Javascript-->
-    <script src="{% static 'assets/js/flex-tree.min.js' %}"></script>
-    <script src="{% static 'assets/js/tree.js' %}"></script>
+   <!-- Flextree Javascript-->
+   <script src="{% static 'assets/js/flex-tree.min.js' %}"></script>
+   <script src="{% static 'assets/js/tree.js' %}"></script>
 
-    <!-- Table Treeview JavaScript -->
-    <script src="{% static 'assets/js/table-treeview.js' %}"></script>
+   <!-- Table Treeview JavaScript -->
+   <script src="{% static 'assets/js/table-treeview.js' %}"></script>
 
-    <!-- SweetAlert JavaScript -->
-    <script src="{% static 'assets/js/sweetalert.js' %}"></script>
+   <!-- SweetAlert JavaScript -->
+   <script src="{% static 'assets/js/sweetalert.js' %}"></script>
 
-    <!-- Chart Custom JavaScript -->
-    <script src="{% static 'assets/js/chart-custom.js' %}"></script>
+   <!-- Chart Custom JavaScript -->
+   <script src="{% static 'assets/js/chart-custom.js' %}"></script>
 
-    <!-- slider JavaScript -->
-    <script src="{% static 'assets/js/slider.js' %}"></script>
+   <!-- slider JavaScript -->
+   <script src="{% static 'assets/js/slider.js' %}"></script>
 
-    <!-- app JavaScript -->
-    <script src="{% static 'assets/js/app.js' %}"></script>
+   <!-- app JavaScript -->
+   <script src="{% static 'assets/js/app.js' %}"></script>
 
-    <!-- Print JavaScript -->
-    <script type="text/JavaScript" src="{% static 'assets/js/jQuery.print.js' %}"></script>
+   <!-- Print JavaScript -->
+   <script type="text/JavaScript" src="{% static 'assets/js/jQuery.print.js' %}"></script>
 
 
-</body></html>
+</body>
+
+</html>

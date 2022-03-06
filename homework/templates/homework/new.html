@@ -4,38 +4,39 @@
 
 {% block content %}
 
-    <div class="modal fade" id="description_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
+<div class="modal fade" id="description_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
 
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Description</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        {% for post in object_list %}
-        <div class="col-lg-4 col-md-6">
-            <div class="card">
-               <div class="card-header">
-                  {{post.title}}
-               </div>
-               <div class="card-body">
-                  <!--<h4 class="card-title">Special title treatment</h4>-->
-                  <p class="card-text">{{post.description}}</p>
-                  <!--<a href="#" class="btn btn-primary"></a>-->
-               </div>
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Description</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-          {%empty%}
-          <p>No homeworks yey</p>
-         </div>
-         {% endfor %}
-      </div>
-      <div class="modal-footer">
-      </div>
+            <div class="modal-body">
+                {% for post in object_list %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            {{post.title}}
+                        </div>
+                        <div class="card-body">
+                            <!--<h4 class="card-title">Special title treatment</h4>-->
+                            <p class="card-text">{{post.description}}</p>
+                            <!--<a href="#" class="btn btn-primary"></a>-->
+                        </div>
+                    </div>
+                    {%empty%}
+                    <p>No homeworks yey</p>
+                </div>
+                {% endfor %}
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <div>
 </div>
@@ -43,21 +44,21 @@
 {% endblock %}
 
 {% block custom_js %}
-    <script>
-    $('[data-toggle=description_modal]').on('click',function(){
+<script>
+    $('[data-toggle=description_modal]').on('click', function () {
         $('#description_modal .modal-body').html($(this).find('p').html());
         $('#description_modal').modal('show');
     });
-    $('[data-toggle=ann_create_modal]').on('click',function(){
+    $('[data-toggle=ann_create_modal]').on('click', function () {
         $('#ann_create_modal').modal('show');
     });
-    $('#newPostButton').on('click',function() {
+    $('#newPostButton').on('click', function () {
         const form = $('#newPostForm');
         $.ajax({
             url: form.attr('action'),
             type: 'POST',
             data: form.serialize(),
-            success: function(data) {
+            success: function (data) {
                 try {
                     if (JSON.parse(data) === 'success') {
                         console.log("got success")
@@ -69,32 +70,39 @@
                     console.log(data.toString())
                 }
             },
-            error: function(data) {
+            error: function (data) {
                 console.log(data);
             }
         });
     });
-    $('#filterAnnouncements').on('keyup',function() {
-        {#alert("hi");#}
-
+    $('#filterAnnouncements').on('keyup', function () {
         const selection = $(this).val();
-        console.log("val: "+selection);
+        console.log("val: " + selection);
         const dataset = $('#announcements_table tbody').find('tr');
         dataset.show()
-        dataset.filter(function(index, item){
-            console.log("filter result: "+($(item).children('td').eq(1).text().toLowerCase().indexOf(selection.toLowerCase()) === -1).toString())
-            if ($(item).find("td[data-column=name]").text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
+        dataset.filter(function (index, item) {
+            console.log("filter result: " + ($(item).children('td').eq(1).text().toLowerCase().indexOf(
+                selection.toLowerCase()) === -1).toString())
+            if ($(item).find("td[data-column=name]").text().toLowerCase().indexOf(selection
+                    .toLowerCase()) !== -1) {
                 return false;
-            } if ($(item).children('td').eq(1).text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
+            }
+            if ($(item).children('td').eq(1).text().toLowerCase().indexOf(selection.toLowerCase()) !== -
+                1) {
                 return false;
-            } if ($(item).children('td').eq(2).text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
+            }
+            if ($(item).children('td').eq(2).text().toLowerCase().indexOf(selection.toLowerCase()) !== -
+                1) {
                 return false;
-            } if ($(item).children('td').eq(3).find('p').text().toLowerCase().indexOf(selection.toLowerCase()) !== -1) {
+            }
+            if ($(item).children('td').eq(3).find('p').text().toLowerCase().indexOf(selection
+                    .toLowerCase()) !== -1) {
                 return false;
             } else {
                 return true;
-            }
-            ;
-}).hide();
-    });
-{% endblock %}
+            };
+        }).hide();
+    }); {
+        %
+        endblock %
+    }

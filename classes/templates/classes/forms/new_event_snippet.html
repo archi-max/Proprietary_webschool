@@ -1,0 +1,55 @@
+<div class="form-group text-left">
+    <label for="id_title" class="text-left">Title</label>
+    <input class="form-control {%  if form.title.errors %} is-invalid {% endif %} " type="text" name="title"
+        maxlength="100" required id="id_title">
+    {%  if form.title.errors %}<div class="invalid-feedback">{{ form.title.errors }}</div> {% endif %}
+</div>
+
+<div class="form-group text-left">
+    <label for="id_upload_by" class="form-label">Start Date</label>
+    <input class="form-control {%  if form.start.errors %} is-invalid {% endif %}" type="datetime-local" name="start"
+        required id="id_upload_by">
+    {%  if form.upload_by.errors %}<div class="invalid-feedback">{{ form.upload_by.errors }}</div> {% endif %}
+</div>
+
+<div class="form-group text-left">
+    <label for="id_upload_by" class="form-label">End Date</label>
+    <input class="form-control {%  if form.end.errors %} is-invalid {% endif %}" type="datetime-local" name="end"
+        id="id_upload_by">
+    {%  if form.upload_by.errors %}<div class="invalid-feedback">{{ form.upload_by.errors }}</div> {% endif %}
+</div>
+
+<div class="form-group text-left">
+    <label for="id_url" class="text-left">URL</label>
+    <input class="form-control {%  if form.url.errors %} is-invalid {% endif %} " type="text" name="url" maxlength="100"
+        id="id_url">
+    {%  if form.title.errors %}<div class="invalid-feedback">{{ form.url.errors }}</div> {% endif %}
+</div>
+
+
+<div class="form-group text-left">
+    <label for="id_description" class="form-label">Description</label>
+    <textarea class="form-control {%  if form.description.errors %} is-invalid{% endif %}" name="description" cols="40"
+        rows="3" id="id_description"></textarea>
+    {%  if form.description.errors %}<div class="invalid-feedback">{{ form.description.errors }}</div> {% endif %}
+</div>
+
+<div class="form-group text-left">
+    <label for="id_groups" class="form-label">Groups</label>
+    <select name="groups" id="id_groups" multiple
+        class="form-control {%  if form.file.errors %} is-invalid {% endif %}">
+        {% for x, y in form.fields.groups.choices %}
+        <option value="{{ x }}" {% if form.fields.groups.value == x %} selected{% endif %}>{{ y }}</option>
+        {% endfor %}
+    </select>
+    {%  if form.groups.errors %}<div class="invalid-feedback">{{ form.groups.errors }}</div> {% endif %}
+</div>
+
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary" id="new-event-button">
+        Save
+    </button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+        Close
+    </button>
+</div>

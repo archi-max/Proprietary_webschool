@@ -1,26 +1,28 @@
-
-
 <div class="form-group">
-    <label for="id_title">Title:</label>
-    <input class="form-control {%  if form.title.errors %} is-invalid {% endif %} " type="text" name="title" maxlength="100" required="" id="id_title">
+    <label for="id_title">Title</label>
+    <input class="form-control {%  if form.title.errors %} is-invalid {% endif %} " type="text" name="title"
+        maxlength="100" required id="id_title">
     {%  if form.title.errors %}<div class="invalid-feedback">{{ form.title.errors }}</div> {% endif %}
 </div>
 
 <div class="form-group">
     <label for="id_description">Description</label>
-      <textarea class="form-control {%  if form.description.errors %} is-invalid{% endif %}" name="description" cols="40" rows="3" id="id_description"></textarea>
+    <textarea class="form-control {%  if form.description.errors %} is-invalid{% endif %}" name="description" cols="40"
+        rows="3" id="id_description"></textarea>
     {%  if form.description.errors %}<div class="invalid-feedback">{{ form.description.errors }}</div> {% endif %}
 </div>
 
 <div class="form-check">
-    <input class="form-check-input {%  if form.is_active.errors %} is-invalid {% endif %}" type="checkbox" name="is_active" id="id_is_active">
+    <input class="form-check-input {%  if form.is_active.errors %} is-invalid {% endif %}" type="checkbox"
+        name="is_active" id="id_is_active">
     <label class="form-check-label" for="id_is_active">Is active</label>
     {%  if form.is_active.errors %}<div class="invalid-feedback">{{ form.is_active.errors }}</div> {% endif %}
 </div>
 
 <div class="form-group">
     <label for="id_file">File</label>
-      <input type="file" class="form-control-file {%  if form.file.errors %} is-invalid{% endif %}"  name="file" id="id_file">
+    <input type="file" class="form-control-file {%  if form.file.errors %} is-invalid{% endif %}" name="file"
+        id="id_file">
     {%  if form.file.errors %}<div class="invalid-feedback">{{ form.file.errors }}</div> {% endif %}
 </div>
 
@@ -29,19 +31,25 @@
         <label for="id_tags">Tags</label>
         <select name="tags" id="id_tags" class="form-control {%  if form.tags.errors %} is-invalid{% endif %}">
             {% for x, y in form.fields.tags.choices %}
-                <option value="{{ x }}"{% if form.fields.tags.value == x %} selected{% endif %}>{{ y }}</option>
+            <option value="{{ x }}" {% if form.fields.tags.value == x %} selected{% endif %}>{{ y }}</option>
             {% endfor %}
         </select>
-    {%  if form.tags.errors %}<div class="invalid-feedback">{{ form.tags.errors }}</div> {% endif %}
+        {%  if form.tags.errors %}<div class="invalid-feedback">{{ form.tags.errors }}</div> {% endif %}
     </div>
 </div>
 
 <div class="form-group col-md-6">
-    <label for="id_groups">Groups:</label>
-    <select name="groups" id="id_groups" multiple class="form-control {%  if form.file.errors %} is-invalid {% endif %}">
+    <label for="id_groups">Groups</label>
+    <select name="groups" id="id_groups" multiple
+        class="form-control {%  if form.file.errors %} is-invalid {% endif %}">
         {% for x, y in form.fields.groups.choices %}
-            <option value="{{ x }}"{% if form.fields.groups.value == x %} selected{% endif %}>{{ y }}</option>
+        <option value="{{ x }}" {% if form.fields.groups.value == x %} selected{% endif %}>{{ y }}</option>
         {% endfor %}
     </select>
     {%  if form.groups.errors %}<div class="invalid-feedback">{{ form.groups.errors }}</div> {% endif %}
+</div>
+
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary" id="newPostButton">Save</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 </div>

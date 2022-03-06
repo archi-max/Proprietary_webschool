@@ -38,14 +38,6 @@ def create_notion_page(dbid, title="Notebook Title", description="Notebook Descr
     print(result)
     return result['id'], result['url']
 
-def create_fake_notion_page(title="Notebook Title"):
-    url = 'http://localhost:8080/pages/'
-    data = {"blocks": [{"tag": "h1", "html": title, "imageUrl": ""},{"tag": "p", "html": "", "imageUrl": ""}]}
-    headers = {"Content-Type": "application/json"}
-    res = requests.post(url, json=data, headers=headers)
-    res = json.loads(res.text)
-    return res['pageId']
-
 
 class NotebookForm(forms.ModelForm):
 
@@ -56,6 +48,14 @@ class NotebookForm(forms.ModelForm):
     class Meta:
         model = Notebook
         fields = ['title', 'description']
+
+    def clean_database_url(self):
+        url = self.cleaned_data['database_url']
+        if not url.startswith('https://www.notion.so/'):
+            raise forms.ValidationError("Invalid URL")
+        # if NotebookDatabase.objects.filter(url=url).exclude(user).exists():
+        #     raise forms.ValidationError("Database is already being used by another user!")
+        return url
 
     def save(self, user, commit=True):
         notebook = super(NotebookForm, self).save(commit=False)
