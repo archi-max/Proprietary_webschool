@@ -43,7 +43,16 @@ class UserUpdateView(UpdateView):
     context_object_name = 'student'
 
     def get_object(self, queryset=None):
-        return User.objects.get(user_id=self.kwargs['pk'])
+        pk = self.kwargs.get('pk', None)
+        if pk is None:
+            pk = self.request.user.user_id
+        print("pk: ", pk)
+        return User.objects.get(user_id=pk)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['self'] = True if self.kwargs.get('pk', None) is None else False
+        return context
 
     def form_valid(self, form):
         print("form validating")

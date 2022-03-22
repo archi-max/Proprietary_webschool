@@ -2,6 +2,7 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, FormView, DeleteView
 from .models import Work, Submission
 from .forms import SubmissionForm, WorkForm
+from classes.models import Event
 # Create your views here.
 from django import template
 register = template.Library()
@@ -45,9 +46,15 @@ class WorkFormView(FormView):
         work = form.save(commit=False)
         work.created_by = self.request.user
         work.save()
+
+        e = Event.objects.create(created_by=self.request.user, title=form.cleaned_data['title']+" Homework", description=form.cleaned_data['description'], start=form.cleaned_data['upload_by'], allday=True, background_color="#ff0000")
+        e.save()
+
         for grp in form.cleaned_data['groups']:
             work.groups.add(grp)
+            e.groups.add(grp)
         work.save()
+        e.save()
         return super().form_valid(form)
 
 class WorkListView(ListView):

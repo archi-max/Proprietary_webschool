@@ -79,6 +79,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_short_name(self):
         return self.first_name
 
+    def get_user_type(self):
+        ut = self.user_type
+        for k,val in self.USER_TYPE_CHOICES:
+            if k == ut:
+                return val
     @property
     def is_teacher(self):
         return self.user_type == self.TEACHER
