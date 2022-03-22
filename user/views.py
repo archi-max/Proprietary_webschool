@@ -37,12 +37,13 @@ def export_users(request):
 
 class UserUpdateView(UpdateView):
     model = User
-    template_name = 'user/profile.html'
+    template_name = 'user/user_update.html'
     success_url = '/profile/'
-    fields = ('avatar', 'first_name', 'last_name', 'email')
+    fields = ('avatar', 'first_name', 'last_name', 'email', 'groups')
+    context_object_name = 'student'
 
     def get_object(self, queryset=None):
-        return self.request.user
+        return User.objects.get(user_id=self.kwargs['pk'])
 
     def form_valid(self, form):
         print("form validating")
