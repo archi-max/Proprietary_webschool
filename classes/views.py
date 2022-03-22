@@ -4,6 +4,7 @@ from .models import Class, Event
 from .forms import ClassCreateForm, EventCreateForm
 from django.contrib.auth import get_user_model
 from datetime import datetime
+from django.db.models import Q
 
 User = get_user_model()
 
@@ -42,7 +43,8 @@ class EventListView(ListView):
         return context
 
     def get_queryset(self):
-        return Event.objects.filter(groups__in=self.request.user.groups.all()).distinct()
+        return Event.objects.filter(Q(groups__in=self.request.user.groups.all()) |
+                                    Q(created_by=self.request.user)).distinct()
 
 
 class ClassJoinView(DetailView):

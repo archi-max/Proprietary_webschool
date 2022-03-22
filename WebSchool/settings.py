@@ -84,6 +84,7 @@ WSGI_APPLICATION = 'WebSchool.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+        'CONN_MAX_AGE': 15,
         'OPTIONS': {
                     'read_default_file': str(BASE_DIR / 'mysql.cnf'),
                 },
