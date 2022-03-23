@@ -113,8 +113,23 @@
   src="{% static 'assets/vendor/calendar/calendar.js' %}"
 ></script>
 <script>
+  function toISOString(date) {
+    var pad = function(n, width) {
+        width = width || 2;
+        n = Math.abs(Math.floor(n)) + '';
+        return n.length >= width ? n : new Array(width - n.length + 1).join('0') + n;
+    };
 
+    return date.getFullYear() +
+        '-' + pad(date.getMonth() + 1) +
+        '-' + pad(date.getDate()) +
+        'T' + pad(date.getHours()) +
+        ':' + pad(date.getMinutes()) +
+        ':' + pad(date.getSeconds())
+  }
+  
   $(document).ready(function() {
+
       var date = new Date();
   	var d = date.getDate();
   	var m = date.getMonth();
@@ -180,21 +195,8 @@
   		allDaySlot: false,
   		selectHelper: true,
   		select: function(start, end, allDay) {
-  			{% comment %} var title = prompt('Event Title:');
-  			if (title) {
-  				calendar.fullCalendar('renderEvent',
-  					{
-  						title: title,
-  						start: start,
-  						end: end,
-  						allDay: allDay
-  					},
-  					true // make the event "stick"
-  				);
-  			} {% endcomment %}
-        
-        document.getElementById('id_start_date').value = start.toISOString().split("Z")[0];
-        document.getElementById('id_end_date').value = end.toISOString().split("Z")[0];
+        document.getElementById('id_start_date').value = toISOString(start);
+        document.getElementById('id_end_date').value = toISOString(end);
         $('#work_create_modal').modal('show');
   			calendar.fullCalendar('unselect');
   		},
