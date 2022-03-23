@@ -192,7 +192,10 @@
   					true // make the event "stick"
   				);
   			} {% endcomment %}
-  	  		$('#work_create_modal').modal('show');
+        
+        document.getElementById('id_start_date').value = start.toISOString().split("Z")[0];
+        document.getElementById('id_end_date').value = end.toISOString().split("Z")[0];
+        $('#work_create_modal').modal('show');
   			calendar.fullCalendar('unselect');
   		},
   		droppable: true, // this allows things to be dropped onto the calendar !!!
