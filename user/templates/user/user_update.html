@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>User Role: {{ student.get_user_type }} </label>
+                        <label>{{ student.get_user_type }} </label>
                     </div>
 
                 </div>
@@ -107,7 +107,7 @@
                             </div>
                         </div>
 
-                        {% if not self %}<button id="useradd_submit" type="submit" class="btn btn-primary">Add New User</button>{% endif %}
+                        <button id="useradd_submit" type="submit" class="btn btn-primary">{% if not self %}Add New User{% else %}Save{% endif %}</button>
                     </div>
                 </div>
             </div>
@@ -161,7 +161,7 @@
             buttonsStyling: false
         })
         $.ajax({
-            url: "{% url 'user:user_add' %}",
+            url: "{% url 'user:profile_update' %}",
             type: "POST",
             enctype: 'multipart/form-data',
             processData: false,
@@ -175,15 +175,19 @@
                     swalWithBootstrapButtons.fire({
                         title: 'Success!',
                         icon: 'success',
-                        text: "successfully added the user",
+                        text: "successfully edited the profile",
                         type: 'success',
                         showCancelButton: false,
                         confirmButtonText: 'OK',
                         reverseButtons: true
                     }).then((result) => {
-                        $("input").each(function (i) {
+                        {% if not self %}
+                            $("input").each(function (i) {
                             $(this).val('')
                         })
+                        {% else %}
+                            window.location.href = "{% url 'user:profile' %}";
+                        {% endif %}
                         console.log(result)
                     })
                 } else {
