@@ -38,7 +38,7 @@ def export_users(request):
 class UserUpdateView(UpdateView):
     model = User
     template_name = 'user/user_update.html'
-    success_url = '/profile/'
+    success_url = '/formsuccess/'
     fields = ('avatar', 'first_name', 'last_name', 'email', 'groups')
     context_object_name = 'student'
 
