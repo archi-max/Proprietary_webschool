@@ -4,6 +4,7 @@ from django.views.generic.edit import FormView, UpdateView, DeleteView
 from .models import Post
 from .forms import PostForm
 from django.urls import reverse
+from django.db.models import Q
 
 # Create your views here.
 
@@ -12,7 +13,7 @@ class PostListView(ListView):
     template_name = 'posts/post_list.html'
     context_object_name = "announcements"
     def get_queryset(self):
-        return Post.objects.filter(groups__in=self.request.user.groups.all()).order_by('-updated_at').distinct()
+        return Post.objects.filter(Q(groups__in=self.request.user.groups.all()) | Q(created_by=self.request.user)).order_by('-updated_at').distinct()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

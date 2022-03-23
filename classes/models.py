@@ -16,6 +16,9 @@ class Event(models.Model):
     url = models.URLField(max_length=200, null=True, blank=True)
     background_color = models.CharField(max_length=7, default='#03a9f3')
 
+    def __str__(self):
+        return self.title
+
 class Class(models.Model):
     days = models.CharField(max_length=13) # day number, seperated by comma. Sunday is 0
     meeting_id = models.CharField(max_length=42)

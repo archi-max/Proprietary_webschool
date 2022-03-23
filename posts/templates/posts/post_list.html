@@ -153,11 +153,16 @@
   $('#newPostForm').on('submit', function (e) {
     e.preventDefault();
     const form = $(this);
+    var formData = new FormData(this);
+
     $.ajax({
-      url: form.attr('action'),
-      type: 'POST',
-      data: form.serialize(),
-      success: function (data) {
+        url: form.attr('action'),
+        type: 'POST',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (data) {
         const swalWithBootstrapButtons = Swal.mixin({
           customClass: {
             confirmButton: 'btn btn-primary',
@@ -192,7 +197,7 @@
           console.log(data.toString())
         }
       },
-      error: function (data) {
+        error: function (data) {
         console.log(data);
       }
     });
